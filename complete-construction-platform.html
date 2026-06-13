@@ -1,0 +1,4780 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0F0F23">
+  <title>施工評価プラットフォーム - 完全版</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Enhanced Color System */
+      --bg-primary: #0A0A0F;
+      --bg-secondary: #141420;
+      --bg-tertiary: #1E1E2E;
+      --bg-glass: rgba(255, 255, 255, 0.02);
+      --accent-primary: #00F5FF;
+      --accent-secondary: #8B5CF6;
+      --accent-tertiary: #F59E0B;
+      --accent-gradient: linear-gradient(135deg, #00F5FF 0%, #8B5CF6 50%, #F59E0B 100%);
+      --accent-glow: 0 0 30px rgba(0, 245, 255, 0.3);
+      
+      --text-primary: #FFFFFF;
+      --text-secondary: #B4B4B8;
+      --text-muted: #6B7280;
+      --text-accent: #00F5FF;
+      
+      --border-primary: #2A2A3A;
+      --border-secondary: #3F3F4F;
+      --border-glow: rgba(0, 245, 255, 0.2);
+      
+      --success: #00D084;
+      --success-bg: rgba(0, 208, 132, 0.1);
+      --warning: #FFB800;
+      --warning-bg: rgba(255, 184, 0, 0.1);
+      --danger: #FF4757;
+      --danger-bg: rgba(255, 71, 87, 0.1);
+      --info: #3742FA;
+      --info-bg: rgba(55, 66, 250, 0.1);
+      
+      --surface: #161622;
+      --surface-elevated: #1F1F2E;
+      --surface-glass: rgba(255, 255, 255, 0.05);
+      
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.25);
+      --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.35);
+      --shadow-glow: var(--accent-glow);
+      
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+      
+      --space-0_5: 0.125rem;
+      --space-1: 0.25rem;
+      --space-1_5: 0.375rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      
+      --radius-xs: 0.25rem;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
+      --radius-3xl: 2rem;
+      --radius-full: 9999px;
+      
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    /* カメラ関連のスタイル */
+    .menu-camera {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border: 2px solid var(--accent-primary);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .menu-camera .menu-icon {
+      font-size: 2rem;
+      animation: pulse 2s infinite;
+    }
+    
+    .camera-badge {
+      background: var(--warning) !important;
+      color: white !important;
+      animation: bounce 1s infinite;
+    }
+    
+    .nav-camera {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)) !important;
+      border: 1px solid var(--accent-primary) !important;
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.3) !important;
+      border-radius: var(--radius-xl) !important;
+    }
+    
+    .nav-camera .nav-icon {
+      font-size: 1.5rem !important;
+      animation: pulse 2s infinite !important;
+    }
+    
+    .quick-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+    
+    .quick-action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      border: none;
+      border-radius: var(--radius-xl);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+    
+    .quick-action-btn.primary {
+      background: var(--accent-primary);
+      color: white;
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .quick-action-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl), var(--shadow-glow);
+    }
+    
+    .quick-action-btn.secondary {
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-secondary);
+    }
+    
+    .quick-action-btn.secondary:hover {
+      background: var(--surface-glass);
+      transform: translateY(-1px);
+    }
+    
+    .quick-action-btn .icon {
+      font-size: 1.25rem;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    
+    /* カメラページのスタイル */
+    .camera-container {
+      height: 100vh;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    .camera-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-6);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+      z-index: 100;
+      color: white;
+    }
+    
+    .camera-close {
+      color: white !important;
+    }
+    
+    .camera-title {
+      text-align: center;
+      color: white;
+    }
+    
+    .camera-title h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+    
+    .camera-title p {
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+    
+    .camera-video-container {
+      flex: 1;
+      position: relative;
+      background: var(--bg-secondary);
+      overflow: hidden;
+    }
+    
+    #cameraVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: var(--bg-secondary);
+    }
+    
+    .camera-placeholder,
+    .camera-error {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      z-index: 50;
+    }
+    
+    .placeholder-content,
+    .error-content {
+      text-align: center;
+      padding: var(--space-8);
+      max-width: 400px;
+    }
+    
+    .placeholder-icon,
+    .error-icon {
+      font-size: 4rem;
+      margin-bottom: var(--space-4);
+    }
+    
+    .placeholder-content h3,
+    .error-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      color: var(--text-primary);
+    }
+    
+    .placeholder-content p,
+    .error-content p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+      line-height: 1.5;
+    }
+    
+    .error-actions {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    
+    .detection-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 75;
+    }
+    
+    .detection-info {
+      position: absolute;
+      top: 80px;
+      left: var(--space-6);
+      right: var(--space-6);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      color: white;
+    }
+    
+    .detection-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+    }
+    
+    .detection-title {
+      font-weight: 600;
+    }
+    
+    .detection-status {
+      display: flex;
+      gap: var(--space-1);
+    }
+    
+    .detected-count {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--success);
+    }
+    
+    .detected-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    
+    .detection-progress .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: var(--space-2);
+    }
+    
+    .detection-progress .progress-fill {
+      height: 100%;
+      background: var(--success);
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease;
+    }
+    
+    .progress-text {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    
+    .detection-marker {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: white;
+      animation: pulse 2s infinite;
+    }
+    
+    .detection-marker.success {
+      background: var(--success);
+      border: 3px solid rgba(0, 208, 132, 0.3);
+    }
+    
+    .detection-marker.warning {
+      background: var(--warning);
+      border: 3px solid rgba(255, 184, 0, 0.3);
+    }
+    
+    .camera-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+      padding: var(--space-6);
+      z-index: 100;
+    }
+    
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+    
+    .control-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+    
+    .control-btn.secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      backdrop-filter: blur(10px);
+    }
+    
+    .control-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+    
+    .last-photo-thumb {
+      width: 48px;
+      height: 48px;
+      background: var(--surface-elevated);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+    
+    .shutter-button {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .shutter-button:active {
+      transform: scale(0.9);
+      background: var(--accent-primary);
+    }
+    
+    .shutter-inner {
+      width: 64px;
+      height: 64px;
+      background: white;
+      border-radius: 50%;
+      transition: var(--transition-fast);
+    }
+    
+    .shutter-button:active .shutter-inner {
+      background: white;
+      transform: scale(0.8);
+    }
+    
+    .camera-guide {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      padding: var(--space-3);
+      border-radius: var(--radius-lg);
+      color: white;
+    }
+    
+    .guide-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-size: 0.875rem;
+    }
+    
+    .guide-icon {
+      font-size: 1.125rem;
+    }
+    
+    /* 撮影結果ページのスタイル */
+    .photo-preview {
+      position: relative;
+      background: var(--surface-elevated);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* Enhanced Layout */
+    .app-container {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+      background: radial-gradient(ellipse at top, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+                  radial-gradient(ellipse at bottom, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    }
+    
+    .page {
+      display: none;
+      animation: slideIn 0.4s var(--transition-normal);
+      min-height: 100vh;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Glass Morphism Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border-primary);
+      padding: var(--space-4) var(--space-6);
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0.02;
+      pointer-events: none;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    
+    .header-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.025em;
+    }
+    
+    .header-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: var(--space-1);
+      font-weight: 500;
+    }
+    
+    /* Advanced Button System */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-lg);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    
+    .btn:hover::before {
+      opacity: 0.1;
+    }
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-md), var(--shadow-glow);
+      font-weight: 700;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+    }
+    
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-secondary);
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-primary);
+    }
+    
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger) 0%, #FF6B7A 100%);
+      color: var(--text-primary);
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, var(--success) 0%, #00E6A0 100%);
+      color: var(--text-primary);
+    }
+    
+    /* Enhanced Card System */
+    .card {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+      pointer-events: none;
+    }
+    
+    .card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .card:hover::before {
+      opacity: 0.03;
+    }
+    
+    .card-interactive {
+      cursor: pointer;
+    }
+    
+    .card-glow {
+      box-shadow: var(--shadow-lg), var(--accent-glow);
+    }
+    
+    /* Enhanced Statistics */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-6);
+    }
+    
+    .stat-card {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition-normal);
+      cursor: pointer;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-gradient);
+      transform: scaleX(0);
+      transition: transform var(--transition-normal);
+      transform-origin: left;
+    }
+    
+    .stat-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-glow);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .stat-value {
+      font-size: 2.25rem;
+      font-weight: 900;
+      margin-bottom: var(--space-2);
+      line-height: 1;
+      font-family: var(--font-mono);
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .stat-change {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: var(--space-1);
+    }
+    
+    .stat-success { color: var(--success); }
+    .stat-danger { color: var(--danger); }
+    .stat-warning { color: var(--warning); }
+    .stat-info { color: var(--info); }
+    .stat-primary { color: var(--accent-primary); }
+    
+    /* Advanced Progress System */
+    .progress-container {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin: var(--space-6);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0.02;
+      pointer-events: none;
+    }
+    
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-5);
+    }
+    
+    .progress-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .progress-percentage {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+    }
+    
+    .progress-bar {
+      height: 12px;
+      background: var(--border-primary);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      position: relative;
+      margin-bottom: var(--space-4);
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-full);
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+    }
+    
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    
+    .progress-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+    }
+    
+    .progress-eta {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .progress-status {
+      color: var(--success);
+      font-weight: 600;
+    }
+    
+    /* Enhanced Menu Grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      padding: var(--space-6);
+    }
+    
+    .menu-item {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    
+    .menu-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+    
+    .menu-item:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl), var(--accent-glow);
+      border-color: var(--border-glow);
+    }
+    
+    .menu-item:hover::before {
+      opacity: 0.05;
+    }
+    
+    .menu-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto var(--space-4);
+      background: var(--accent-gradient);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      position: relative;
+      z-index: 1;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .menu-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .menu-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      position: relative;
+      z-index: 1;
+      line-height: 1.4;
+    }
+    
+    .menu-badge {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      background: var(--danger);
+      color: var(--text-primary);
+      border-radius: var(--radius-full);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      z-index: 2;
+      box-shadow: var(--shadow-md);
+    }
+    
+    /* Enhanced Record System */
+    .record-list {
+      padding: var(--space-6);
+    }
+    
+    .record-item {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      margin-bottom: var(--space-4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .record-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent-gradient);
+      transform: scaleY(0);
+      transition: transform var(--transition-normal);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+    
+    .record-item:hover::before {
+      transform: scaleY(1);
+    }
+    
+    .record-item:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .record-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-4);
+    }
+    
+    .record-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+      color: var(--text-primary);
+    }
+    
+    .record-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .record-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    
+    .record-actions {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    
+    .record-note {
+      padding: var(--space-3);
+      background: var(--danger-bg);
+      border: 1px solid rgba(255, 71, 87, 0.2);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-4);
+      font-size: 0.875rem;
+      color: var(--danger);
+    }
+    
+    /* Status Badge System */
+    .status-badge {
+      padding: var(--space-1_5) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid;
+    }
+    
+    .status-success {
+      background: var(--success-bg);
+      color: var(--success);
+      border-color: var(--success);
+    }
+    
+    .status-danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+    
+    .status-warning {
+      background: var(--warning-bg);
+      color: var(--warning);
+      border-color: var(--warning);
+    }
+    
+    .status-info {
+      background: var(--info-bg);
+      color: var(--info);
+      border-color: var(--info);
+    }
+    
+    /* Filter System */
+    .filter-bar {
+      padding: var(--space-4) var(--space-6);
+      background: var(--surface-elevated);
+      border-bottom: 1px solid var(--border-primary);
+      backdrop-filter: blur(20px);
+    }
+    
+    .filter-chips {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .filter-chip {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: 1px solid var(--border-primary);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    
+    .filter-chip.active {
+      background: var(--accent-gradient);
+      color: var(--text-primary);
+      border-color: transparent;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .filter-chip:hover:not(.active) {
+      border-color: var(--border-secondary);
+      color: var(--text-primary);
+      background: var(--surface-elevated);
+    }
+    
+    /* Enhanced Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      background: rgba(10, 10, 15, 0.9);
+      backdrop-filter: blur(30px) saturate(180%);
+      border-top: 1px solid var(--border-primary);
+      padding: var(--space-3) var(--space-6);
+      z-index: 200;
+    }
+    
+    .nav-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-2);
+      color: var(--text-muted);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+      border-radius: var(--radius-lg);
+    }
+    
+    .nav-item.active {
+      color: var(--accent-primary);
+    }
+    
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0.1;
+      border-radius: var(--radius-lg);
+    }
+    
+    .nav-icon {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-0_5);
+    }
+    
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .nav-badge {
+      position: absolute;
+      top: -2px;
+      right: 4px;
+      background: var(--danger);
+      color: var(--text-primary);
+      border-radius: var(--radius-full);
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    
+    /* Floating Action Button */
+    .fab {
+      position: fixed;
+      bottom: 100px;
+      right: var(--space-6);
+      width: 64px;
+      height: 64px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-xl), var(--accent-glow);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      border: none;
+      z-index: 150;
+      font-weight: 700;
+    }
+    
+    .fab:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: var(--shadow-xl), 0 0 40px rgba(0, 245, 255, 0.5);
+    }
+    
+    .fab:active {
+      transform: scale(0.95);
+    }
+    
+    /* Form System */
+    .form-container {
+      padding: var(--space-6);
+    }
+    
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+    
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: var(--space-4);
+      background: var(--surface-glass);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-lg);
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-family: var(--font-family);
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(10px);
+    }
+    
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.1);
+    }
+    
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    /* Loading States */
+    .loading-skeleton {
+      background: linear-gradient(90deg, var(--surface) 25%, var(--border-primary) 50%, var(--surface) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: var(--radius-lg);
+      height: 1rem;
+    }
+    
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border-primary);
+      border-top-color: var(--accent-primary);
+      border-radius: var(--radius-full);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Modal System */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: var(--space-4);
+    }
+    
+    .modal {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      max-width: 90%;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: modalSlide 0.3s var(--transition-normal);
+    }
+    
+    @keyframes modalSlide {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    /* Notification System */
+    .notification {
+      position: fixed;
+      top: var(--space-4);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-secondary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4) var(--space-6);
+      color: var(--text-primary);
+      font-weight: 600;
+      z-index: 1100;
+      animation: notificationSlide 0.3s var(--transition-normal);
+      box-shadow: var(--shadow-xl);
+      backdrop-filter: blur(20px);
+      max-width: 90%;
+    }
+    
+    @keyframes notificationSlide {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    
+    .notification.success {
+      border-color: var(--success);
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    
+    .notification.error {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+    
+    .notification.warning {
+      border-color: var(--warning);
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+    
+    /* Chart Containers */
+    .chart-container {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      backdrop-filter: blur(20px);
+    }
+    
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+    
+    .chart-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .chart-controls {
+      display: flex;
+      gap: var(--space-2);
+    }
+    
+    .chart-mock {
+      height: 200px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .chart-mock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-gradient);
+      opacity: 0.05;
+    }
+    
+    /* Team Member Cards */
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-6);
+    }
+    
+    .member-card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-5);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      backdrop-filter: blur(20px);
+    }
+    
+    .member-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .member-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-full);
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .member-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+      color: var(--text-primary);
+    }
+    
+    .member-role {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-3);
+    }
+    
+    .member-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    /* Settings Page */
+    .settings-section {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+      backdrop-filter: blur(20px);
+    }
+    
+    .settings-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+      color: var(--text-primary);
+    }
+    
+    .settings-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    
+    .settings-item:last-child {
+      border-bottom: none;
+    }
+    
+    .settings-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .settings-description {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: var(--space-0_5);
+    }
+    
+    /* Toggle Switch */
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      background: var(--border-primary);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .toggle.active {
+      background: var(--accent-primary);
+    }
+    
+    .toggle::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .toggle.active::before {
+      transform: translateX(24px);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 380px) {
+      .stats-grid, .menu-grid {
+        padding: var(--space-4);
+        gap: var(--space-3);
+      }
+      
+      .card, .stat-card, .menu-item {
+        padding: var(--space-4);
+      }
+      
+      .header {
+        padding: var(--space-3) var(--space-4);
+      }
+    }
+    
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    
+    .btn:focus-visible,
+    .menu-item:focus-visible,
+    .nav-item:focus-visible,
+    .form-input:focus-visible,
+    .form-select:focus-visible,
+    .form-textarea:focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+    
+    /* Print Styles */
+    @media print {
+      .header, .bottom-nav, .fab {
+        display: none !important;
+      }
+      
+      .page {
+        background: white !important;
+        color: black !important;
+      }
+    }
+    
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      :root {
+        --bg-primary: #000000;
+        --text-primary: #FFFFFF;
+        --border-primary: #FFFFFF;
+        --accent-primary: #00FFFF;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- ==================== ホーム画面 ==================== -->
+    <div id="homePage" class="page active">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div>
+            <h1 class="header-title">施工評価プラットフォーム</h1>
+            <p class="header-subtitle">港区新築マンション建設工事</p>
+          </div>
+          <button class="btn btn-ghost" onclick="openSettings()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Progress Overview -->
+      <div class="progress-container">
+        <div class="progress-header">
+          <h2 class="progress-title">全体進捗</h2>
+          <span class="progress-percentage" id="progressPercentage">67%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 67%"></div>
+        </div>
+        <div class="progress-details">
+          <span class="progress-eta">完了予定: 2024年9月30日 • あと <span id="daysRemaining">85</span>日</span>
+          <span class="progress-status">✓ 順調</span>
+        </div>
+      </div>
+
+      <!-- Statistics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card" onclick="filterRecords('completed')">
+          <div class="stat-value stat-success" data-target="8">0</div>
+          <div class="stat-label">合格済み</div>
+          <div class="stat-change stat-success">+3 今日</div>
+        </div>
+        <div class="stat-card" onclick="filterRecords('failed')">
+          <div class="stat-value stat-danger" data-target="1">0</div>
+          <div class="stat-label">要修正</div>
+          <div class="stat-change stat-danger">-0 改善</div>
+        </div>
+        <div class="stat-card" onclick="filterRecords('pending')">
+          <div class="stat-value stat-warning" data-target="6">0</div>
+          <div class="stat-label">確認待ち</div>
+          <div class="stat-change stat-warning">+2 新規</div>
+        </div>
+        <div class="stat-card" onclick="navigateToPage('recordsPage')">
+          <div class="stat-value stat-primary" data-target="15">0</div>
+          <div class="stat-label">総記録数</div>
+          <div class="stat-change stat-primary">+8 今週</div>
+        </div>
+      </div>
+
+      <!-- Main Menu Grid -->
+      <div class="menu-grid">
+        <a href="#" onclick="navigateToPage('recordsPage')" class="menu-item">
+          <div class="menu-icon">📋</div>
+          <div class="menu-title">施工記録</div>
+          <div class="menu-subtitle">記録管理・進捗確認・品質チェック</div>
+          <div class="menu-badge">8</div>
+        </a>
+
+        <a href="#" onclick="navigateToPage('analysisPage')" class="menu-item">
+          <div class="menu-icon">📊</div>
+          <div class="menu-title">分析ダッシュボード</div>
+          <div class="menu-subtitle">データ可視化・パフォーマンス分析</div>
+        </a>
+
+        <a href="#" onclick="navigateToPage('qualityPage')" class="menu-item">
+          <div class="menu-icon">✅</div>
+          <div class="menu-title">品質管理</div>
+          <div class="menu-subtitle">検査・判定・承認・監査</div>
+          <div class="menu-badge">2</div>
+        </a>
+
+        <a href="#" onclick="navigateToPage('teamPage')" class="menu-item">
+          <div class="menu-icon">👥</div>
+          <div class="menu-title">チーム管理</div>
+          <div class="menu-subtitle">メンバー・権限・役割管理</div>
+        </a>
+        
+        <a href="#" onclick="navigateToPage('cameraPage')" class="menu-item menu-camera">
+          <div class="menu-icon">📷</div>
+          <div class="menu-title">カメラ撮影</div>
+          <div class="menu-subtitle">写真撮影・AI判定・品質検査</div>
+          <div class="menu-badge camera-badge">NEW</div>
+        </a>
+      </div>
+      
+      <!-- カメラ撮影ショートカット -->
+      <div class="quick-actions" style="margin: var(--space-6) var(--space-6) var(--space-4);">
+        <button class="quick-action-btn primary" onclick="navigateToPage('cameraPage')">
+          <span class="icon">📸</span>
+          <span class="text">すぐに撮影</span>
+        </button>
+        <button class="quick-action-btn secondary" onclick="navigateToPage('createPage')">
+          <span class="icon">✏️</span>
+          <span class="text">記録作成</span>
+        </button>
+      </div>
+
+      <!-- Floating Action Button -->
+      <button class="fab" onclick="navigateToPage('cameraPage')" aria-label="カメラ撮影">
+        📷
+      </button>
+    </div>
+
+    <!-- ==================== 施工記録ページ ==================== -->
+    <div id="recordsPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('homePage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">施工記録</h1>
+            <p class="header-subtitle">全 <span id="totalRecords">8</span> 件の記録</p>
+          </div>
+          <button class="btn btn-primary" onclick="navigateToPage('createPage')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            新規
+          </button>
+        </div>
+      </header>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-chips">
+          <button class="filter-chip active" data-filter="all">全て (8)</button>
+          <button class="filter-chip" data-filter="pending">確認待ち (4)</button>
+          <button class="filter-chip" data-filter="completed">完了 (3)</button>
+          <button class="filter-chip" data-filter="failed">要修正 (1)</button>
+          <button class="filter-chip" data-filter="today">今日 (3)</button>
+        </div>
+      </div>
+
+      <!-- Records List -->
+      <div class="record-list" id="recordsList">
+        <!-- Records will be dynamically generated -->
+      </div>
+    </div>
+
+    <!-- ==================== 分析ダッシュボードページ ==================== -->
+    <div id="analysisPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('homePage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">分析ダッシュボード</h1>
+            <p class="header-subtitle">リアルタイム分析・レポート</p>
+          </div>
+          <button class="btn btn-secondary" onclick="exportReport()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+            </svg>
+            出力
+          </button>
+        </div>
+      </header>
+
+      <div style="padding: var(--space-6);">
+        <!-- Performance Metrics -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 class="chart-title">週別パフォーマンス</h3>
+            <div class="chart-controls">
+              <button class="btn btn-ghost" onclick="changeTimeRange('week')">週</button>
+              <button class="btn btn-ghost" onclick="changeTimeRange('month')">月</button>
+            </div>
+          </div>
+          <div class="chart-mock" id="performanceChart">
+            📈 パフォーマンスチャート
+          </div>
+        </div>
+
+        <!-- Quality Metrics -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6);">
+          <div class="card text-center card-glow">
+            <div style="font-size: 2rem; font-weight: 900; color: var(--success); margin-bottom: var(--space-2);">94%</div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 600;">品質スコア</div>
+            <div style="font-size: 0.75rem; color: var(--success); margin-top: var(--space-1);">+2% vs 先週</div>
+          </div>
+          <div class="card text-center card-glow">
+            <div style="font-size: 2rem; font-weight: 900; color: var(--accent-primary); margin-bottom: var(--space-2);">1.8日</div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 600;">平均処理時間</div>
+            <div style="font-size: 0.75rem; color: var(--success); margin-top: var(--space-1);">-0.5日 改善</div>
+          </div>
+        </div>
+
+        <!-- AI Insights -->
+        <div class="card">
+          <h3 style="margin-bottom: var(--space-4); font-size: 1.25rem; font-weight: 700;">🤖 AIインサイト</h3>
+          <div style="space-y: var(--space-3);">
+            <div style="padding: var(--space-4); background: var(--success-bg); border: 1px solid var(--success); border-radius: var(--radius-lg); margin-bottom: var(--space-3);">
+              <div style="font-weight: 600; margin-bottom: var(--space-2); color: var(--success);">🎯 効率性向上の提案</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">6Fブロックの作業効率が前週比20%向上しています。同様の手法を他フロアにも適用することを推奨します。</div>
+            </div>
+            <div style="padding: var(--space-4); background: var(--warning-bg); border: 1px solid var(--warning); border-radius: var(--radius-lg); margin-bottom: var(--space-3);">
+              <div style="font-weight: 600; margin-bottom: var(--space-2); color: var(--warning);">⚠️ 注意事項</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">B-13エリアで再検査率が15%増加傾向です。施工手順の見直しが必要です。</div>
+            </div>
+            <div style="padding: var(--space-4); background: var(--info-bg); border: 1px solid var(--info); border-radius: var(--radius-lg);">
+              <div style="font-weight: 600; margin-bottom: var(--space-2); color: var(--info);">💡 予測アラート</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">現在のペースで進むと、予定より3日早く完了する見込みです。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 品質管理ページ ==================== -->
+    <div id="qualityPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('homePage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">品質管理</h1>
+            <p class="header-subtitle">検査・判定・承認システム</p>
+          </div>
+          <button class="btn btn-primary" onclick="startInspection()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+            検査開始
+          </button>
+        </div>
+      </header>
+
+      <div style="padding: var(--space-6);">
+        <!-- 検査統計ダッシュボード -->
+        <div class="stats-grid" style="margin-bottom: var(--space-6);">
+          <div class="stat-card success" style="background: var(--surface-elevated); padding: var(--space-4); border-radius: var(--radius-xl); border: 1px solid var(--border-secondary);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="font-size: 2rem;">✅</div>
+              <div>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--success);">127</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">合格</div>
+              </div>
+            </div>
+            <div style="color: var(--success); font-size: 0.875rem; margin-top: var(--space-2);">+12%</div>
+          </div>
+          
+          <div class="stat-card warning" style="background: var(--surface-elevated); padding: var(--space-4); border-radius: var(--radius-xl); border: 1px solid var(--border-secondary);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="font-size: 2rem;">⚠️</div>
+              <div>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--warning);">8</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">要注意</div>
+              </div>
+            </div>
+            <div style="color: var(--warning); font-size: 0.875rem; margin-top: var(--space-2);">+2</div>
+          </div>
+          
+          <div class="stat-card danger" style="background: var(--surface-elevated); padding: var(--space-4); border-radius: var(--radius-xl); border: 1px solid var(--border-secondary);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="font-size: 2rem;">❌</div>
+              <div>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--danger);">3</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">不合格</div>
+              </div>
+            </div>
+            <div style="color: var(--danger); font-size: 0.875rem; margin-top: var(--space-2);">-1</div>
+          </div>
+          
+          <div class="stat-card info" style="background: var(--surface-elevated); padding: var(--space-4); border-radius: var(--radius-xl); border: 1px solid var(--border-secondary);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div style="font-size: 2rem;">📊</div>
+              <div>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--accent-primary);">94.2%</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">合格率</div>
+              </div>
+            </div>
+            <div style="color: var(--success); font-size: 0.875rem; margin-top: var(--space-2);">+1.8%</div>
+          </div>
+        </div>
+
+        <!-- AI判定システムリアルタイム表示 -->
+        <div class="card card-glow" style="margin-bottom: var(--space-6);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="font-size: 1.5rem;">🤖</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700;">AI判定システム</h3>
+            <div style="margin-left: auto; padding: var(--space-1) var(--space-3); background: var(--success-bg); color: var(--success); border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600;">稼働中</div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-4);">
+            <div class="text-center">
+              <div style="position: relative; width: 80px; height: 80px; margin: 0 auto var(--space-2);">
+                <svg width="80" height="80">
+                  <circle cx="40" cy="40" r="35" fill="none" stroke="var(--border-secondary)" stroke-width="6"/>
+                  <circle cx="40" cy="40" r="35" fill="none" stroke="var(--accent-primary)" stroke-width="6" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="4" transform="rotate(-90 40 40)"/>
+                </svg>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                  <div style="font-size: 0.875rem; font-weight: 700; color: var(--accent-primary);">98.7%</div>
+                </div>
+              </div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">精度</div>
+            </div>
+            
+            <div class="text-center">
+              <div style="width: 80px; height: 80px; margin: 0 auto var(--space-2); display: flex; align-items: center; justify-content: center; position: relative;">
+                <div style="width: 8px; height: 8px; background: var(--accent-primary); border-radius: 50%; animation: pulse 2s infinite;"></div>
+                <div style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); font-size: 0.875rem; font-weight: 700; color: var(--accent-primary);">1.2s</div>
+              </div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">処理時間</div>
+            </div>
+            
+            <div class="text-center">
+              <div style="width: 80px; height: 80px; margin: 0 auto var(--space-2); display: flex; align-items: center; justify-content: center;">
+                <div style="display: flex; gap: 2px; align-items: end;">
+                  <div style="width: 8px; height: 45px; background: var(--accent-secondary); border-radius: 2px;"></div>
+                  <div style="width: 8px; height: 65px; background: var(--accent-secondary); border-radius: 2px;"></div>
+                  <div style="width: 8px; height: 70px; background: var(--accent-primary); border-radius: 2px;"></div>
+                  <div style="width: 8px; height: 80px; background: var(--accent-primary); border-radius: 2px;"></div>
+                </div>
+              </div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">今日の判定数</div>
+              <div style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);">2,847</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 検査項目別詳細分析 -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="font-size: 1.5rem;">📈</span>
+              <h3 style="font-size: 1.25rem; font-weight: 700;">検査項目別分析</h3>
+            </div>
+            <button class="btn btn-ghost" onclick="toggleInspectionDetails()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div style="space-y: var(--space-4);">
+            <!-- 位置決め具 -->
+            <div style="background: var(--surface-glass); padding: var(--space-4); border-radius: var(--radius-lg); border: 1px solid var(--border-primary);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                  <span style="font-size: 1.5rem;">🔩</span>
+                  <span style="font-weight: 600;">位置決め具</span>
+                </div>
+                <div style="padding: var(--space-1) var(--space-3); background: var(--success); color: white; border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 600;">A+</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">検査数</span>
+                  <div style="font-weight: 600;">89</div>
+                </div>
+                <div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">合格率</span>
+                  <div style="font-weight: 600; color: var(--success);">97.8%</div>
+                </div>
+              </div>
+              <div style="width: 100%; height: 8px; background: var(--surface); border-radius: var(--radius-full); overflow: hidden;">
+                <div style="width: 97.8%; height: 100%; background: var(--success);"></div>
+              </div>
+            </div>
+            
+            <!-- 寸法精度 -->
+            <div style="background: var(--surface-glass); padding: var(--space-4); border-radius: var(--radius-lg); border: 1px solid var(--border-primary);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                  <span style="font-size: 1.5rem;">📐</span>
+                  <span style="font-weight: 600;">寸法精度</span>
+                </div>
+                <div style="padding: var(--space-1) var(--space-3); background: var(--warning); color: white; border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 600;">B+</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">検査数</span>
+                  <div style="font-weight: 600;">34</div>
+                </div>
+                <div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">合格率</span>
+                  <div style="font-weight: 600; color: var(--warning);">89.2%</div>
+                </div>
+              </div>
+              <div style="width: 100%; height: 8px; background: var(--surface); border-radius: var(--radius-full); overflow: hidden;">
+                <div style="width: 89.2%; height: 100%; background: var(--warning);"></div>
+              </div>
+            </div>
+            
+            <!-- 構造強度 -->
+            <div style="background: var(--surface-glass); padding: var(--space-4); border-radius: var(--radius-lg); border: 1px solid var(--border-primary);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                  <span style="font-size: 1.5rem;">🏗️</span>
+                  <span style="font-weight: 600;">構造強度</span>
+                </div>
+                <div style="padding: var(--space-1) var(--space-3); background: var(--success); color: white; border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 600;">A</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">検査数</span>
+                  <div style="font-weight: 600;">15</div>
+                </div>
+                <div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">合格率</span>
+                  <div style="font-weight: 600; color: var(--success);">100%</div>
+                </div>
+              </div>
+              <div style="width: 100%; height: 8px; background: var(--surface); border-radius: var(--radius-full); overflow: hidden;">
+                <div style="width: 100%; height: 100%; background: var(--success);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 最新の検査結果タイムライン -->
+        <div class="card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <span style="font-size: 1.5rem;">📋</span>
+              <h3 style="font-size: 1.25rem; font-weight: 700;">最新の検査結果</h3>
+            </div>
+            <div style="display: flex; gap: var(--space-2);">
+              <button class="chip active" data-filter="all" style="padding: var(--space-1) var(--space-2); background: var(--accent-primary); color: white; border: none; border-radius: var(--radius-md); font-size: 0.75rem;">全て</button>
+              <button class="chip" data-filter="passed" style="padding: var(--space-1) var(--space-2); background: var(--surface-elevated); color: var(--text-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); font-size: 0.75rem;">合格</button>
+              <button class="chip" data-filter="attention" style="padding: var(--space-1) var(--space-2); background: var(--surface-elevated); color: var(--text-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); font-size: 0.75rem;">要注意</button>
+            </div>
+          </div>
+          
+          <div style="space-y: var(--space-4);">
+            <!-- 検査結果 1 -->
+            <div style="display: flex; gap: var(--space-3); padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); border-left: 4px solid var(--success);">
+              <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">✓</div>
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1);">
+                  <div>
+                    <span style="font-size: 0.875rem; color: var(--text-secondary);">#QC-2024-0847</span>
+                    <span style="font-weight: 600; margin-left: var(--space-2);">位置決め具検査</span>
+                  </div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">2分前</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-bottom: var(--space-2);">
+                  <div>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">判定</span>
+                    <div style="font-weight: 600; color: var(--success);">合格</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">精度</span>
+                    <div style="font-weight: 600;">98.7%</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">位置</span>
+                    <div style="font-weight: 600;">B-12, 6F</div>
+                  </div>
+                </div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">検査者: 田中監督</div>
+              </div>
+            </div>
+            
+            <!-- 検査結果 2 -->
+            <div style="display: flex; gap: var(--space-3); padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); border-left: 4px solid var(--warning);">
+              <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--warning); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">!</div>
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1);">
+                  <div>
+                    <span style="font-size: 0.875rem; color: var(--text-secondary);">#QC-2024-0846</span>
+                    <span style="font-weight: 600; margin-left: var(--space-2);">寸法精度検査</span>
+                  </div>
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">15分前</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-bottom: var(--space-2);">
+                  <div>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">判定</span>
+                    <div style="font-weight: 600; color: var(--warning);">要注意</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">偏差</span>
+                    <div style="font-weight: 600; color: var(--warning);">+2.3mm</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);">位置</span>
+                    <div style="font-weight: 600;">A-8, 5F</div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                  <div style="padding: var(--space-1) var(--space-2); background: var(--warning-bg); color: var(--warning); border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 600;">⚠️ 許容値を超過</div>
+                </div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">検査者: 佐藤技師</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== チーム管理ページ ==================== -->
+    <div id="teamPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('homePage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">チーム管理</h1>
+            <p class="header-subtitle">18名のメンバー • 3つのグループ</p>
+          </div>
+          <button class="btn btn-primary" onclick="inviteMember()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            招待
+          </button>
+        </div>
+      </header>
+
+      <div style="padding: var(--space-6);">
+        <!-- Team Overview -->
+        <div class="card card-glow" style="margin-bottom: var(--space-6);">
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-4);">👥 チーム概要</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+            <div class="text-center">
+              <div style="font-size: 2rem; font-weight: 900; color: var(--accent-primary);">18</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">総メンバー数</div>
+            </div>
+            <div class="text-center">
+              <div style="font-size: 2rem; font-weight: 900; color: var(--success);">15</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">アクティブ</div>
+            </div>
+            <div class="text-center">
+              <div style="font-size: 2rem; font-weight: 900; color: var(--warning);">3</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">休暇中</div>
+            </div>
+          </div>
+
+          <div style="background: var(--info-bg); border: 1px solid var(--info); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center;">
+            <div style="font-weight: 600; color: var(--info);">📊 チーム効率性: 96%</div>
+          </div>
+        </div>
+
+        <!-- チーム管理機能拡張 -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6);">
+          <!-- メンバー権限管理 -->
+          <div class="card">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+              <span style="font-size: 1.5rem;">🔐</span>
+              <h3 style="font-size: 1.25rem; font-weight: 700;">権限管理</h3>
+            </div>
+            
+            <div style="space-y: var(--space-3);">
+              <div style="padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); margin-bottom: var(--space-3);">
+                <div style="font-weight: 600; margin-bottom: var(--space-2);">管理者</div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: var(--space-2);">
+                    <div style="width: 32px; height: 32px; background: var(--accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">田</div>
+                    <div>
+                      <div style="font-weight: 500;">田中 太郎</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">プロジェクト管理者</div>
+                    </div>
+                  </div>
+                  <div style="padding: var(--space-1) var(--space-2); background: var(--success-bg); color: var(--success); border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 600;">全権限</div>
+                </div>
+              </div>
+              
+              <div style="padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); margin-bottom: var(--space-3);">
+                <div style="font-weight: 600; margin-bottom: var(--space-2);">監督者 (3名)</div>
+                <div style="space-y: var(--space-2);">
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2);">
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                      <div style="width: 28px; height: 28px; background: var(--accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.875rem;">佐</div>
+                      <div>
+                        <div style="font-weight: 500; font-size: 0.875rem;">佐藤 花子</div>
+                        <div style="font-size: 0.75rem; color: var(--text-secondary);">品質管理監督</div>
+                      </div>
+                    </div>
+                    <div style="padding: var(--space-0_5) var(--space-1_5); background: var(--info-bg); color: var(--info); border-radius: var(--radius-sm); font-size: 0.75rem;">検査権限</div>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2);">
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                      <div style="width: 28px; height: 28px; background: var(--accent-tertiary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.875rem;">鈴</div>
+                      <div>
+                        <div style="font-weight: 500; font-size: 0.875rem;">鈴木 次郎</div>
+                        <div style="font-size: 0.75rem; color: var(--text-secondary);">安全管理責任者</div>
+                      </div>
+                    </div>
+                    <div style="padding: var(--space-0_5) var(--space-1_5); background: var(--warning-bg); color: var(--warning); border-radius: var(--radius-sm); font-size: 0.75rem;">承認権限</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-3);" onclick="showPermissionSettings()">
+              権限設定を編集
+            </button>
+          </div>
+          
+          <!-- アクティブメンバー一覧 -->
+          <div class="card">
+            <div style="display: flex; align-items: center; justify-content: between; margin-bottom: var(--space-4);">
+              <div style="display: flex; align-items: center; gap: var(--space-3);">
+                <span style="font-size: 1.5rem;">👥</span>
+                <h3 style="font-size: 1.25rem; font-weight: 700;">アクティブメンバー</h3>
+              </div>
+              <div style="margin-left: auto; padding: var(--space-1) var(--space-3); background: var(--success-bg); color: var(--success); border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600;">15名 稼働中</div>
+            </div>
+            
+            <div style="space-y: var(--space-2); max-height: 400px; overflow-y: auto;">
+              <!-- メンバー1 -->
+              <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); border-left: 3px solid var(--success);">
+                <div style="flex-shrink: 0;">
+                  <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">田</div>
+                  <div style="width: 8px; height: 8px; background: var(--success); border: 2px solid var(--bg-primary); border-radius: 50%; position: relative; margin-top: -12px; margin-left: 32px;"></div>
+                </div>
+                <div style="flex: 1;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                      <div style="font-weight: 600;">田中 太郎</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">プロジェクト管理者</div>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-size: 0.75rem; color: var(--success);">オンライン</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">7F B-12</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- メンバー2 -->
+              <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); border-left: 3px solid var(--success);">
+                <div style="flex-shrink: 0;">
+                  <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-secondary), var(--accent-tertiary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">佐</div>
+                  <div style="width: 8px; height: 8px; background: var(--success); border: 2px solid var(--bg-primary); border-radius: 50%; position: relative; margin-top: -12px; margin-left: 32px;"></div>
+                </div>
+                <div style="flex: 1;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                      <div style="font-weight: 600;">佐藤 花子</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">品質管理監督</div>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-size: 0.75rem; color: var(--success);">検査中</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">5F A-08</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- メンバー3 -->
+              <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--surface-elevated); border-radius: var(--radius-lg); border-left: 3px solid var(--warning);">
+                <div style="flex-shrink: 0;">
+                  <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--warning)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">鈴</div>
+                  <div style="width: 8px; height: 8px; background: var(--warning); border: 2px solid var(--bg-primary); border-radius: 50%; position: relative; margin-top: -12px; margin-left: 32px;"></div>
+                </div>
+                <div style="flex: 1;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                      <div style="font-weight: 600;">鈴木 次郎</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">安全管理責任者</div>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-size: 0.75rem; color: var(--warning);">休憩中</div>
+                      <div style="font-size: 0.75rem; color: var(--text-secondary);">3F 休憩室</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn btn-secondary" style="width: 100%; margin-top: var(--space-3);" onclick="showAllMembers()">
+              全メンバーを表示
+            </button>
+          </div>
+        </div>
+        
+        <!-- チーム統計とパフォーマンス -->
+        <div class="card" style="margin-top: var(--space-6);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="font-size: 1.5rem;">📊</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700;">チームパフォーマンス</h3>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+            <!-- 効率性指標 -->
+            <div style="text-center; padding: var(--space-4); background: var(--surface-elevated); border-radius: var(--radius-lg);">
+              <div style="position: relative; width: 120px; height: 120px; margin: 0 auto var(--space-3);">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border-secondary)" stroke-width="8"/>
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--success)" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="12" transform="rotate(-90 60 60)"/>
+                </svg>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 900; color: var(--success);">96%</div>
+                  <div style="font-size: 0.75rem; color: var(--text-secondary);">効率性</div>
+                </div>
+              </div>
+              <div style="font-weight: 600;">チーム効率</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">前月比 +8%</div>
+            </div>
+            
+            <!-- 品質スコア -->
+            <div style="text-center; padding: var(--space-4); background: var(--surface-elevated); border-radius: var(--radius-lg);">
+              <div style="position: relative; width: 120px; height: 120px; margin: 0 auto var(--space-3);">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border-secondary)" stroke-width="8"/>
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent-primary)" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="18" transform="rotate(-90 60 60)"/>
+                </svg>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 900; color: var(--accent-primary);">94%</div>
+                  <div style="font-size: 0.75rem; color: var(--text-secondary);">品質</div>
+                </div>
+              </div>
+              <div style="font-weight: 600;">品質スコア</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">業界平均 89%</div>
+            </div>
+            
+            <!-- 安全性 -->
+            <div style="text-center; padding: var(--space-4); background: var(--surface-elevated); border-radius: var(--radius-lg);">
+              <div style="position: relative; width: 120px; height: 120px; margin: 0 auto var(--space-3);">
+                <svg width="120" height="120">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border-secondary)" stroke-width="8"/>
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="var(--warning)" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+                </svg>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: 900; color: var(--warning);">100%</div>
+                  <div style="font-size: 0.75rem; color: var(--text-secondary);">安全</div>
+                </div>
+              </div>
+              <div style="font-weight: 600;">安全性指標</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">無事故継続 45日</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- チーム管理アクション -->
+        <div class="card" style="margin-top: var(--space-6);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="font-size: 1.5rem;">⚡</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700;">チーム管理アクション</h3>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+            <button class="btn" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); background: var(--surface-elevated); border: 1px solid var(--border-secondary); color: var(--text-primary); justify-content: flex-start;" onclick="scheduleTeamMeeting()">
+              <span style="font-size: 1.5rem;">📅</span>
+              <div style="text-align: left;">
+                <div style="font-weight: 600;">チームミーティング</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">進捗確認と調整</div>
+              </div>
+            </button>
+            
+            <button class="btn" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); background: var(--surface-elevated); border: 1px solid var(--border-secondary); color: var(--text-primary); justify-content: flex-start;" onclick="assignTasks()">
+              <span style="font-size: 1.5rem;">📋</span>
+              <div style="text-align: left;">
+                <div style="font-weight: 600;">タスク割り当て</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">作業の分担を調整</div>
+              </div>
+            </button>
+            
+            <button class="btn" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); background: var(--surface-elevated); border: 1px solid var(--border-secondary); color: var(--text-primary); justify-content: flex-start;" onclick="generateTeamReport()">
+              <span style="font-size: 1.5rem;">📊</span>
+              <div style="text-align: left;">
+                <div style="font-weight: 600;">チームレポート</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">パフォーマンス分析</div>
+              </div>
+            </button>
+            
+            <button class="btn" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); background: var(--surface-elevated); border: 1px solid var(--border-secondary); color: var(--text-primary); justify-content: flex-start;" onclick="manageNotifications()">
+              <span style="font-size: 1.5rem;">🔔</span>
+              <div style="text-align: left;">
+                <div style="font-weight: 600;">通知設定</div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary);">アラート管理</div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== カメラ撮影ページ ==================== -->
+    <div id="cameraPage" class="page">
+      <div class="camera-container">
+        <!-- カメラヘッダー -->
+        <div class="camera-header">
+          <button class="btn btn-ghost camera-close" onclick="navigateToPage('homePage')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+          </button>
+          <div class="camera-title">
+            <h2>施工写真撮影</h2>
+            <p>位置決め具検査 - 6F B-12</p>
+          </div>
+          <button class="btn btn-ghost" onclick="toggleFlashlight()" id="flashBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 2v11h3v9l7-12h-4l3-8z"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- カメラビデオエリア -->
+        <div class="camera-video-container">
+          <video id="cameraVideo" autoplay playsinline muted></video>
+          <canvas id="cameraCanvas" style="display: none;"></canvas>
+          
+          <!-- カメラ起動前の表示 -->
+          <div id="cameraPlaceholder" class="camera-placeholder">
+            <div class="placeholder-content">
+              <div class="placeholder-icon">📷</div>
+              <h3>カメラを起動</h3>
+              <p>撮影を開始するにはカメラボタンを押してください</p>
+              <button class="btn btn-primary" onclick="startCamera()">
+                <span>📸 カメラを起動</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- カメラエラー表示 -->
+          <div id="cameraError" class="camera-error" style="display: none;">
+            <div class="error-content">
+              <div class="error-icon">⚠️</div>
+              <h3>カメラにアクセスできません</h3>
+              <p id="errorMessage">カメラの使用権限を許可してください</p>
+              <div class="error-actions">
+                <button class="btn btn-primary" onclick="retryCamera()">再試行</button>
+                <button class="btn btn-secondary" onclick="showCameraHelp()">ヘルプ</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- AI検出オーバーレイ -->
+          <div id="detectionOverlay" class="detection-overlay" style="display: none;">
+            <div class="detection-info">
+              <div class="detection-header">
+                <span class="detection-title">🤖 AI判定中...</span>
+                <div class="detection-status">
+                  <span class="detected-count">22</span>
+                  <span class="detected-label">検出</span>
+                </div>
+              </div>
+              <div class="detection-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 92%"></div>
+                </div>
+                <div class="progress-text">必要数: 24個 (92%完了)</div>
+              </div>
+            </div>
+            
+            <!-- 検出マーカー -->
+            <div class="detection-marker success" style="top: 25%; left: 20%;">✓</div>
+            <div class="detection-marker success" style="top: 35%; right: 25%;">✓</div>
+            <div class="detection-marker warning" style="bottom: 40%; left: 15%;">?</div>
+            <div class="detection-marker success" style="bottom: 30%; right: 20%;">✓</div>
+          </div>
+        </div>
+        
+        <!-- カメラコントロール -->
+        <div class="camera-controls">
+          <div class="controls-row">
+            <!-- 前回の写真 -->
+            <button class="control-btn secondary" onclick="showLastPhoto()">
+              <div class="last-photo-thumb">📷</div>
+            </button>
+            
+            <!-- メインシャッター -->
+            <button class="shutter-button" onclick="takePhoto()" id="shutterBtn">
+              <div class="shutter-inner"></div>
+            </button>
+            
+            <!-- 設定 -->
+            <button class="control-btn secondary" onclick="showCameraSettings()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="camera-guide">
+            <div class="guide-text">
+              <span class="guide-icon">📐</span>
+              <span>格子に合わせて位置決め具を撮影してください</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ==================== 撮影結果ページ ==================== -->
+    <div id="photoResultPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('cameraPage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">撮影完了</h1>
+            <p class="header-subtitle">AI判定結果</p>
+          </div>
+          <button class="btn btn-success" onclick="savePhotoRecord()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+            </svg>
+            保存
+          </button>
+        </div>
+      </header>
+      
+      <div style="padding: var(--space-6);">
+        <!-- 撮影写真プレビュー -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+          <div id="photoPreview" class="photo-preview">
+            <img id="previewImage" alt="撮影した写真" style="width: 100%; border-radius: var(--radius-lg);">
+          </div>
+        </div>
+        
+        <!-- AI判定結果 -->
+        <div class="card" style="margin-bottom: var(--space-6);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="font-size: 1.5rem;">🤖</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700;">AI判定結果</h3>
+            <div style="margin-left: auto; padding: var(--space-1) var(--space-3); background: var(--success-bg); color: var(--success); border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600;">分析完了</div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+            <div class="text-center">
+              <div style="font-size: 2.5rem; font-weight: 900; color: var(--success);">22</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">合格</div>
+            </div>
+            <div class="text-center">
+              <div style="font-size: 2.5rem; font-weight: 900; color: var(--warning);">2</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">要確認</div>
+            </div>
+            <div class="text-center">
+              <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-primary);">91.7%</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">合格率</div>
+            </div>
+          </div>
+          
+          <div style="background: var(--success-bg); border: 1px solid var(--success); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center;">
+            <div style="font-weight: 700; color: var(--success); margin-bottom: var(--space-1);">✅ 品質基準達成</div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary);">検査基準を満たしています</div>
+          </div>
+        </div>
+        
+        <!-- アクション -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+          <button class="btn btn-secondary" onclick="retakePhoto()">
+            <span>📸 再撮影</span>
+          </button>
+          <button class="btn btn-primary" onclick="savePhotoRecord()">
+            <span>💾 保存して記録</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 新規作成ページ ==================== -->
+    <div id="createPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('recordsPage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">新規作成</h1>
+            <p class="header-subtitle">施工記録の作成</p>
+          </div>
+          <button class="btn btn-success" onclick="saveRecord()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+            </svg>
+            保存
+          </button>
+        </div>
+      </header>
+
+      <div class="form-container">
+        <!-- 黒板プレビュー -->
+        <div class="card card-glow" style="margin-bottom: var(--space-6);">
+          <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-4);">🖼️ 黒板プレビュー</h3>
+          <div style="background: #2A2A2A; color: white; padding: var(--space-5); border-radius: var(--radius-lg); border: 2px solid var(--warning);">
+            <div style="text-align: center; border-bottom: 2px solid white; padding-bottom: var(--space-2); margin-bottom: var(--space-3);">
+              <div style="font-size: 1.25rem; font-weight: 700;" id="previewTitle">工事名</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); font-size: 0.875rem;">
+              <div>工種: <span id="previewKoshu">-</span></div>
+              <div>工区: <span id="previewKoku">-</span></div>
+              <div>フロア: <span id="previewFloor">-</span></div>
+              <div>ブロック: <span id="previewBlock">-</span></div>
+              <div>部屋: <span id="previewRoom">-</span></div>
+              <div>施工内容: <span id="previewContent">-</span></div>
+              <div>現状: <span id="previewStatus">-</span></div>
+              <div>撮影者: <span id="previewAuthor">-</span></div>
+            </div>
+            <div style="border-top: 2px solid white; padding-top: var(--space-2); margin-top: var(--space-3); text-align: center;">
+              <div>撮影日: <span id="previewDate">-</span></div>
+              <div style="font-size: 0.75rem; margin-top: var(--space-1);" id="previewNote"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 入力フォーム -->
+        <form id="createRecordForm" onsubmit="saveRecord(event)">
+          <div class="form-group">
+            <label class="form-label">工事名 *</label>
+            <input type="text" class="form-input" name="title" placeholder="港区新築マンション建設工事" required onInput="updatePreview()">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+            <div class="form-group">
+              <label class="form-label">工種 *</label>
+              <select class="form-select" name="koshu" required onchange="updatePreview()">
+                <option value="">選択してください</option>
+                <option value="デッキプレート敷設">デッキプレート敷設</option>
+                <option value="スタッド溶接">スタッド溶接</option>
+                <option value="配筋工事">配筋工事</option>
+                <option value="コンクリート打設">コンクリート打設</option>
+                <option value="物品調査">物品調査</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">工区 *</label>
+              <select class="form-select" name="koku" required onchange="updatePreview()">
+                <option value="">選択</option>
+                <option value="1工区">1工区</option>
+                <option value="2工区">2工区</option>
+                <option value="3工区">3工区</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+            <div class="form-group">
+              <label class="form-label">フロア *</label>
+              <select class="form-select" name="floor" required onchange="updatePreview()">
+                <option value="">選択</option>
+                <option value="屋上">屋上</option>
+                <option value="7F">7F</option>
+                <option value="6F">6F</option>
+                <option value="5F">5F</option>
+                <option value="4F">4F</option>
+                <option value="3F">3F</option>
+                <option value="2F">2F</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">ブロック番号 *</label>
+              <input type="text" class="form-input" name="block" placeholder="B-12" required onInput="updatePreview()">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">部屋番号</label>
+            <input type="text" class="form-input" name="room" placeholder="3901号室" onInput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">施工内容 *</label>
+            <select class="form-select" name="content" required onchange="updatePreview()">
+              <option value="">選択してください</option>
+              <option value="位置決め具設置">位置決め具設置</option>
+              <option value="スタッド溶接">スタッド溶接</option>
+              <option value="スポット溶接固定">スポット溶接固定</option>
+              <option value="係止部確認">係止部確認</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">現状 *</label>
+            <select class="form-select" name="status" required onchange="updatePreview()">
+              <option value="">選択してください</option>
+              <option value="施工前">施工前</option>
+              <option value="施工中">施工中</option>
+              <option value="施工完了">施工完了</option>
+              <option value="確認待ち">確認待ち</option>
+              <option value="合格">合格</option>
+              <option value="不合格（要修正）">不合格（要修正）</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">撮影者 *</label>
+            <input type="text" class="form-input" name="author" value="佐藤花子" required onInput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">備考</label>
+            <textarea class="form-textarea" name="note" placeholder="特記事項があれば入力してください" onInput="updatePreview()"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-6);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+            </svg>
+            記録を作成
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== 設定ページ ==================== -->
+    <div id="settingsPage" class="page">
+      <header class="header">
+        <div class="header-content">
+          <button class="btn btn-ghost" onclick="navigateToPage('homePage')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div>
+            <h1 class="header-title">設定</h1>
+            <p class="header-subtitle">アプリケーション設定</p>
+          </div>
+        </div>
+      </header>
+
+      <div style="padding: var(--space-6);">
+        <!-- General Settings -->
+        <div class="settings-section">
+          <h3 class="settings-title">一般設定</h3>
+          
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">ダークモード</div>
+              <div class="settings-description">外観テーマを変更</div>
+            </div>
+            <div class="toggle active" onclick="toggleSetting(this)"></div>
+          </div>
+
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">通知</div>
+              <div class="settings-description">プッシュ通知を受信</div>
+            </div>
+            <div class="toggle active" onclick="toggleSetting(this)"></div>
+          </div>
+
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">自動保存</div>
+              <div class="settings-description">フォーム入力を自動保存</div>
+            </div>
+            <div class="toggle active" onclick="toggleSetting(this)"></div>
+          </div>
+        </div>
+
+        <!-- Data & Privacy -->
+        <div class="settings-section">
+          <h3 class="settings-title">データとプライバシー</h3>
+          
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">データ同期</div>
+              <div class="settings-description">クラウドでデータを同期</div>
+            </div>
+            <div class="toggle active" onclick="toggleSetting(this)"></div>
+          </div>
+
+          <div class="settings-item">
+            <div>
+              <div class="settings-label">分析データ</div>
+              <div class="settings-description">使用状況データの共有</div>
+            </div>
+            <div class="toggle" onclick="toggleSetting(this)"></div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="settings-section">
+          <h3 class="settings-title">アプリについて</h3>
+          
+          <div style="text-align: center; padding: var(--space-4);">
+            <div style="font-size: 3rem; margin-bottom: var(--space-2);">🏗️</div>
+            <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-1);">施工評価プラットフォーム</div>
+            <div style="color: var(--text-secondary); margin-bottom: var(--space-4);">バージョン 2.1.0</div>
+            <div style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+              最新のテクノロジーで施工管理を革新。<br>
+              品質向上と効率化を実現します。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ボトムナビゲーション ==================== -->
+    <nav class="bottom-nav">
+      <div class="nav-items">
+        <div class="nav-item active" onclick="navigateToPage('homePage')" data-page="homePage">
+          <div class="nav-icon">🏠</div>
+          <div class="nav-label">ホーム</div>
+        </div>
+        <div class="nav-item" onclick="navigateToPage('recordsPage')" data-page="recordsPage">
+          <div class="nav-icon">📋</div>
+          <div class="nav-label">記録</div>
+          <div class="nav-badge" id="recordsBadge">4</div>
+        </div>
+        <div class="nav-item nav-camera" onclick="navigateToPage('cameraPage')" data-page="cameraPage">
+          <div class="nav-icon">📷</div>
+          <div class="nav-label">撮影</div>
+          <div class="nav-badge camera-badge">NEW</div>
+        </div>
+        <div class="nav-item" onclick="navigateToPage('analysisPage')" data-page="analysisPage">
+          <div class="nav-icon">📊</div>
+          <div class="nav-label">分析</div>
+        </div>
+        <div class="nav-item" onclick="navigateToPage('qualityPage')" data-page="qualityPage">
+          <div class="nav-icon">✅</div>
+          <div class="nav-label">品質</div>
+          <div class="nav-badge">2</div>
+        </div>
+      </div>
+    </nav>
+
+  </div>
+
+  <script>
+    // ==================== Application State Management ====================
+    class ConstructionPlatform {
+      constructor() {
+        this.currentPage = 'homePage';
+        this.records = this.initializeRecords();
+        this.members = this.initializeMembers();
+        this.settings = {
+          darkMode: true,
+          notifications: true,
+          autoSave: true,
+          dataSync: true,
+          analytics: false
+        };
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.animateCounters();
+        this.renderRecords();
+        this.renderMembers();
+        this.startRealTimeUpdates();
+        this.updateProgress();
+        this.initializeCamera();
+        
+        console.log('🚀 施工評価プラットフォーム完全版 初期化完了');
+      }
+      
+      // ==================== Camera System ====================
+      initializeCamera() {
+        this.cameraStream = null;
+        this.lastPhoto = null;
+        this.isFlashOn = false;
+        console.log('📷 カメラシステム初期化完了');
+      }
+
+      initializeRecords() {
+        return [
+          {
+            id: 'R001',
+            title: 'デッキプレート敷設',
+            subtitle: '7F B-01 - 4001号室',
+            status: 'pending',
+            priority: 'high',
+            date: '2024-06-12',
+            author: '佐藤花子',
+            type: '位置決め具設置',
+            photos: 0,
+            progress: 0,
+            floor: '7F',
+            block: 'B-01'
+          },
+          {
+            id: 'R002',
+            title: 'スタッド溶接',
+            subtitle: '6F B-12 - 3901号室',
+            status: 'completed',
+            priority: 'medium',
+            date: '2024-06-11',
+            author: '田中太郎',
+            type: 'スタッド溶接',
+            photos: 4,
+            progress: 100,
+            floor: '6F',
+            block: 'B-12'
+          },
+          {
+            id: 'R003',
+            title: 'デッキプレート敷設',
+            subtitle: '6F B-13 - 3902号室',
+            status: 'failed',
+            priority: 'high',
+            date: '2024-06-11',
+            author: '山田次郎',
+            type: '位置決め具設置',
+            photos: 2,
+            progress: 75,
+            floor: '6F',
+            block: 'B-13',
+            note: '位置決め具の設置不良を検出'
+          },
+          {
+            id: 'R004',
+            title: 'スタッド溶接',
+            subtitle: '5F B-08 - 3501号室',
+            status: 'pending',
+            priority: 'medium',
+            date: '2024-06-12',
+            author: '佐藤花子',
+            type: 'スタッド溶接',
+            photos: 0,
+            progress: 0,
+            floor: '5F',
+            block: 'B-08'
+          },
+          {
+            id: 'R005',
+            title: 'デッキプレート敷設',
+            subtitle: '7F B-02 - 4002号室',
+            status: 'completed',
+            priority: 'low',
+            date: '2024-06-10',
+            author: '田中太郎',
+            type: '位置決め具設置',
+            photos: 3,
+            progress: 100,
+            floor: '7F',
+            block: 'B-02'
+          },
+          {
+            id: 'R006',
+            title: 'スタッド溶接',
+            subtitle: '5F B-09 - 3502号室',
+            status: 'pending',
+            priority: 'high',
+            date: '2024-06-12',
+            author: '山田次郎',
+            type: 'スタッド溶接',
+            photos: 1,
+            progress: 25,
+            floor: '5F',
+            block: 'B-09'
+          },
+          {
+            id: 'R007',
+            title: 'デッキプレート敷設',
+            subtitle: '4F B-05 - 2501号室',
+            status: 'completed',
+            priority: 'medium',
+            date: '2024-06-09',
+            author: '佐藤花子',
+            type: '位置決め具設置',
+            photos: 5,
+            progress: 100,
+            floor: '4F',
+            block: 'B-05'
+          },
+          {
+            id: 'R008',
+            title: 'AI判定検査',
+            subtitle: '6F B-12 - 位置決め具検査',
+            status: 'completed',
+            priority: 'high',
+            date: '2024-06-13',
+            author: '田中監督',
+            type: 'AI判定',
+            photos: 1,
+            progress: 100,
+            floor: '6F',
+            block: 'B-12',
+            photoData: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzJBMkEzQSIvPjx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXNpemU9IjE4IiBmaWxsPSIjQjRCNEI4Ij7ksY3nva7lr7rlrprjgZc8L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI2MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwMEY1RkYiPkFJ5Yik5a6a5a6M5LqGPC90ZXh0Pjwvc3ZnPg==',
+            aiResult: {
+              passed: 22,
+              attention: 2,
+              failed: 0,
+              accuracy: 91.7
+            }
+          },
+          {
+            id: 'R009',
+            title: '寸法精度検査',
+            subtitle: '5F A-08 - 精度測定',
+            status: 'attention',
+            priority: 'high',
+            date: '2024-06-13',
+            author: '佐藤技師',
+            type: '寸法測定',
+            photos: 3,
+            progress: 85,
+            floor: '5F',
+            block: 'A-08',
+            note: '許容値を2.3mm超過、要確認'
+          },
+          {
+            id: 'R010',
+            title: 'スタッド溶接検査',
+            subtitle: '7F C-15 - 強度測定',
+            status: 'completed',
+            priority: 'medium',
+            date: '2024-06-13',
+            author: '鈴木主任',
+            type: '強度測定',
+            photos: 4,
+            progress: 100,
+            floor: '7F',
+            block: 'C-15',
+            testResult: '447 MPa - 合格'
+          },
+          {
+            id: 'R011',
+            title: '配筋工事検査',
+            subtitle: '8F B-20 - 配筋チェック',
+            status: 'pending',
+            priority: 'high',
+            date: '2024-06-13',
+            author: '山田作業員',
+            type: '配筋検査',
+            photos: 0,
+            progress: 0,
+            floor: '8F',
+            block: 'B-20'
+          },
+          {
+            id: 'R012',
+            title: 'コンクリート打設準備',
+            subtitle: '6F 全エリア - 打設前点検',
+            status: 'pending',
+            priority: 'high',
+            date: '2024-06-13',
+            author: '田中監督',
+            type: '打設準備',
+            photos: 0,
+            progress: 0,
+            floor: '6F',
+            block: '全エリア'
+          },
+          {
+            id: 'R013',
+            title: 'AI写真判定',
+            subtitle: '5F B-07 - 自動検査',
+            status: 'completed',
+            priority: 'medium',
+            date: '2024-06-12',
+            author: 'AIシステム',
+            type: 'AI判定',
+            photos: 1,
+            progress: 100,
+            floor: '5F',
+            block: 'B-07',
+            photoData: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzE2MTYyMiIvPjx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXNpemU9IjE2IiBmaWxsPSIjMDBGNUZGIj7ppY3nr4vmpoHlvqE8L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI2MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMwMEQ4MDQiPjk0LjclIOOBruWeiyDnn67lmaY8L3RleHQ+PC9zdmc+',
+            aiResult: {
+              passed: 18,
+              attention: 1,
+              failed: 0,
+              accuracy: 94.7
+            }
+          },
+          {
+            id: 'R014',
+            title: '安全点検',
+            subtitle: '全階 - 月次安全巡回',
+            status: 'completed',
+            priority: 'high',
+            date: '2024-06-12',
+            author: '鈴木安全責任者',
+            type: '安全点検',
+            photos: 12,
+            progress: 100,
+            floor: '全階',
+            block: '全エリア',
+            note: '45日間無事故継続中'
+          },
+          {
+            id: 'R015',
+            title: 'クレーン設置作業',
+            subtitle: '屋上 - タワークレーン',
+            status: 'pending',
+            priority: 'high',
+            date: '2024-06-14',
+            author: '外部業者',
+            type: 'クレーン作業',
+            photos: 0,
+            progress: 0,
+            floor: '屋上',
+            block: 'CR-01'
+          },
+          {
+            id: 'R008',
+            title: 'スタッド溶接',
+            subtitle: '6F B-14 - 3903号室',
+            status: 'pending',
+            priority: 'high',
+            date: '2024-06-12',
+            author: '田中太郎',
+            type: 'スタッド溶接',
+            photos: 0,
+            progress: 0,
+            floor: '6F',
+            block: 'B-14'
+          }
+        ];
+      }
+
+      initializeMembers() {
+        return [
+          {
+            id: 'M001',
+            name: '田中太郎',
+            role: '現場監督',
+            avatar: '👨‍💼',
+            status: 'active',
+            tasksCompleted: 15,
+            tasksInProgress: 3,
+            efficiency: 96
+          },
+          {
+            id: 'M002',
+            name: '佐藤花子',
+            role: '施工責任者',
+            avatar: '👩‍🔧',
+            status: 'active',
+            tasksCompleted: 12,
+            tasksInProgress: 2,
+            efficiency: 94
+          },
+          {
+            id: 'M003',
+            name: '山田次郎',
+            role: '品質管理者',
+            avatar: '👨‍🔬',
+            status: 'active',
+            tasksCompleted: 8,
+            tasksInProgress: 4,
+            efficiency: 88
+          },
+          {
+            id: 'M004',
+            name: '鈴木一郎',
+            role: '技能職',
+            avatar: '👷‍♂️',
+            status: 'vacation',
+            tasksCompleted: 20,
+            tasksInProgress: 0,
+            efficiency: 92
+          },
+          {
+            id: 'M005',
+            name: '高橋美咲',
+            role: '安全管理者',
+            avatar: '👩‍💼',
+            status: 'active',
+            tasksCompleted: 11,
+            tasksInProgress: 1,
+            efficiency: 98
+          },
+          {
+            id: 'M006',
+            name: '渡辺健太',
+            role: '技能職',
+            avatar: '👷',
+            status: 'active',
+            tasksCompleted: 18,
+            tasksInProgress: 2,
+            efficiency: 90
+          }
+        ];
+      }
+
+      animateCounters() {
+        const counters = document.querySelectorAll('[data-target]');
+        counters.forEach((counter, index) => {
+          const target = parseInt(counter.getAttribute('data-target'));
+          const duration = 2000 + (index * 300);
+          const increment = target / (duration / 16);
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            counter.textContent = Math.floor(current);
+          }, 16);
+        });
+      }
+
+      renderRecords() {
+        const container = document.getElementById('recordsList');
+        if (!container) return;
+
+        container.innerHTML = this.records.map(record => this.createRecordHTML(record)).join('');
+        
+        // Update record count
+        const totalRecordsElement = document.getElementById('totalRecords');
+        if (totalRecordsElement) {
+          totalRecordsElement.textContent = this.records.length;
+        }
+      }
+
+      createRecordHTML(record) {
+        const statusClass = this.getStatusClass(record.status);
+        const statusText = this.getStatusText(record.status);
+        const priorityIcon = this.getPriorityIcon(record.priority);
+
+        return `
+          <div class="record-item card-interactive" data-status="${record.status}" data-floor="${record.floor}" data-date="${record.date}" onclick="viewRecordDetails('${record.id}')">
+            <div class="record-header">
+              <div>
+                <h3 class="record-title">${priorityIcon} ${record.title}</h3>
+                <p class="record-subtitle">${record.subtitle}</p>
+              </div>
+              <div class="status-badge status-${statusClass}">
+                ${statusText}
+              </div>
+            </div>
+            
+            ${record.photos > 0 && record.photoData ? `
+              <div class="record-photo" style="margin: var(--space-3) 0;">
+                <img src="${record.photoData}" alt="施工写真" style="width: 100%; height: 120px; object-fit: cover; border-radius: var(--radius-md); cursor: pointer;" onclick="event.stopPropagation(); viewPhotoFullscreen('${record.id}')">
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-2);">
+                  <span style="font-size: 0.75rem; color: var(--text-secondary);">📷 撮影写真</span>
+                  ${record.aiResult ? `<span style="font-size: 0.75rem; color: var(--success);">🤖 AI判定完了</span>` : ''}
+                </div>
+              </div>
+            ` : ''}
+            
+            <div class="record-meta">
+              <span>${record.type} • ${record.author}</span>
+              <span>📷 ${record.photos} • ${record.date}</span>
+            </div>
+            
+            ${record.aiResult ? `
+              <div class="ai-result-summary" style="margin: var(--space-3) 0; padding: var(--space-3); background: var(--success-bg); border-radius: var(--radius-md); border-left: 4px solid var(--success);">
+                <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+                  <span style="font-size: 0.875rem; font-weight: 600;">🤖 AI判定結果</span>
+                  <span style="font-size: 0.75rem; color: var(--success);">精度: ${record.aiResult.accuracy}%</span>
+                </div>
+                <div style="display: flex; gap: var(--space-4); font-size: 0.875rem;">
+                  <span>✅ ${record.aiResult.passed}個</span>
+                  ${record.aiResult.attention > 0 ? `<span style="color: var(--warning);">⚠️ ${record.aiResult.attention}個</span>` : ''}
+                  ${record.aiResult.failed > 0 ? `<span style="color: var(--danger);">❌ ${record.aiResult.failed}個</span>` : ''}
+                </div>
+              </div>
+            ` : ''}
+
+            ${record.progress !== undefined ? `
+              <div style="margin-bottom: var(--space-3);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-1);">
+                  <span style="font-size: 0.875rem; color: var(--text-secondary);">進捗</span>
+                  <span style="font-size: 0.875rem; font-weight: 600; color: var(--accent-primary);">${record.progress}%</span>
+                </div>
+                <div style="height: 6px; background: var(--border-primary); border-radius: var(--radius-full); overflow: hidden;">
+                  <div style="height: 100%; background: var(--accent-gradient); width: ${record.progress}%; border-radius: var(--radius-full); transition: width 1s ease;"></div>
+                </div>
+              </div>
+            ` : ''}
+
+            ${record.note ? `
+              <div class="record-note">
+                💬 ${record.note}
+              </div>
+            ` : ''}
+
+            <div class="record-actions">
+              <button class="btn btn-ghost" style="flex: 1;" onclick="editRecord('${record.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+                編集
+              </button>
+              <button class="btn btn-secondary" style="flex: 1;" onclick="viewRecordDetails('${record.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                </svg>
+                詳細
+              </button>
+              ${record.status === 'failed' ? `
+                <button class="btn btn-danger" onclick="retryRecord('${record.id}')">
+                  🔄 再検査
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      renderMembers() {
+        const container = document.getElementById('memberGrid');
+        if (!container) return;
+
+        container.innerHTML = this.members.map(member => `
+          <div class="member-card" onclick="viewMemberDetails('${member.id}')">
+            <div class="member-avatar">${member.avatar}</div>
+            <div class="member-name">${member.name}</div>
+            <div class="member-role">${member.role}</div>
+            <div class="member-stats">
+              <span class="stat-success">完了 ${member.tasksCompleted}</span>
+              <span class="stat-warning">進行 ${member.tasksInProgress}</span>
+              <span class="stat-info">${member.efficiency}%</span>
+            </div>
+            <div style="margin-top: var(--space-3);">
+              <span style="padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 600; ${
+                member.status === 'active' 
+                  ? 'background: var(--success-bg); color: var(--success);' 
+                  : 'background: var(--warning-bg); color: var(--warning);'
+              }">
+                ${member.status === 'active' ? '🟢 アクティブ' : '🟡 休暇中'}
+              </span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      getStatusClass(status) {
+        const statusMap = {
+          'completed': 'success',
+          'failed': 'danger',
+          'pending': 'warning',
+          'in_progress': 'info'
+        };
+        return statusMap[status] || 'warning';
+      }
+
+      getStatusText(status) {
+        const statusMap = {
+          'completed': '完了',
+          'failed': '要修正',
+          'pending': '確認待ち',
+          'in_progress': '作業中'
+        };
+        return statusMap[status] || status;
+      }
+
+      getPriorityIcon(priority) {
+        const priorityMap = {
+          'high': '🔴',
+          'medium': '🟡',
+          'low': '🟢'
+        };
+        return priorityMap[priority] || '';
+      }
+
+      updateProgress() {
+        const completed = this.records.filter(r => r.status === 'completed').length;
+        const total = this.records.length;
+        const percentage = Math.round((completed / total) * 100);
+        
+        const progressFill = document.getElementById('progressFill');
+        const progressPercentage = document.getElementById('progressPercentage');
+        
+        if (progressFill) {
+          setTimeout(() => {
+            progressFill.style.width = `${percentage}%`;
+          }, 500);
+        }
+        if (progressPercentage) {
+          setTimeout(() => {
+            progressPercentage.textContent = `${percentage}%`;
+          }, 800);
+        }
+      }
+
+      setupEventListeners() {
+        // Filter chips
+        document.addEventListener('click', (e) => {
+          if (e.target.matches('.filter-chip')) {
+            this.handleFilterClick(e.target);
+          }
+        });
+
+        // Form preview updates
+        document.addEventListener('input', (e) => {
+          if (e.target.closest('#createRecordForm')) {
+            this.updateFormPreview();
+          }
+        });
+
+        // Auto-save functionality
+        if (this.settings.autoSave) {
+          this.setupAutoSave();
+        }
+      }
+
+      handleFilterClick(chip) {
+        // Remove active class from all chips
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        
+        const filter = chip.getAttribute('data-filter');
+        this.filterRecords(filter);
+        
+        // Add haptic feedback
+        if (navigator.vibrate) {
+          navigator.vibrate(10);
+        }
+      }
+
+      filterRecords(filter) {
+        console.log('🔍 Filtering records by:', filter);
+        
+        // Navigate to records page first
+        this.navigateToPage('recordsPage');
+        
+        // Wait for page to load then filter
+        setTimeout(() => {
+          const records = document.querySelectorAll('.record-item');
+          console.log('📋 Found records:', records.length);
+          
+          let visibleCount = 0;
+          
+          records.forEach(record => {
+            const status = record.getAttribute('data-status');
+            let shouldShow = true;
+            
+            switch (filter) {
+              case 'pending':
+                shouldShow = status === 'pending';
+                break;
+              case 'completed':
+                shouldShow = status === 'completed';
+                break;
+              case 'failed':
+                shouldShow = status === 'failed' || status === 'attention';
+                break;
+              case 'today':
+                // Show records from today
+                shouldShow = record.getAttribute('data-date') === '2024-06-13';
+                break;
+              case 'all':
+              default:
+                shouldShow = true;
+            }
+            
+            if (shouldShow) {
+              record.style.display = 'block';
+              record.style.animation = 'fadeIn 0.3s ease-out';
+              visibleCount++;
+            } else {
+              record.style.display = 'none';
+            }
+          });
+          
+          // Show notification
+          this.showNotification(`${visibleCount}件の記録を表示中（フィルター: ${this.getFilterText(filter)}）`, 'info');
+        }, 100);
+      }
+      
+      getFilterText(filter) {
+        switch(filter) {
+          case 'completed': return '合格済み';
+          case 'pending': return '確認待ち';
+          case 'failed': return '要修正';
+          case 'today': return '今日';
+          default: return '全て';
+        }
+      }
+      }
+
+      updateFormPreview() {
+        const form = document.getElementById('createRecordForm');
+        if (!form) return;
+        
+        const formData = new FormData(form);
+        const today = new Date().toLocaleDateString('ja-JP');
+        
+        document.getElementById('previewTitle').textContent = formData.get('title') || '工事名';
+        document.getElementById('previewKoshu').textContent = formData.get('koshu') || '-';
+        document.getElementById('previewKoku').textContent = formData.get('koku') || '-';
+        document.getElementById('previewFloor').textContent = formData.get('floor') || '-';
+        document.getElementById('previewBlock').textContent = formData.get('block') || '-';
+        document.getElementById('previewRoom').textContent = formData.get('room') || '-';
+        document.getElementById('previewContent').textContent = formData.get('content') || '-';
+        document.getElementById('previewStatus').textContent = formData.get('status') || '-';
+        document.getElementById('previewAuthor').textContent = formData.get('author') || '-';
+        document.getElementById('previewDate').textContent = today;
+        
+        const note = formData.get('note');
+        const noteElement = document.getElementById('previewNote');
+        if (note) {
+          noteElement.textContent = '備考: ' + note;
+          noteElement.style.display = 'block';
+        } else {
+          noteElement.style.display = 'none';
+        }
+      }
+
+      setupAutoSave() {
+        let autoSaveTimer;
+        
+        document.addEventListener('input', (e) => {
+          if (e.target.closest('form')) {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+              this.autoSaveForm(e.target.closest('form'));
+            }, 2000);
+          }
+        });
+      }
+
+      autoSaveForm(form) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        localStorage.setItem('autoSave_' + form.id, JSON.stringify({
+          data: data,
+          timestamp: new Date().toISOString()
+        }));
+        
+        this.showNotification('下書きを保存しました', 'info');
+      }
+
+      startRealTimeUpdates() {
+        setInterval(() => {
+          this.simulateRealTimeUpdates();
+        }, 30000); // 30秒ごと
+      }
+
+      simulateRealTimeUpdates() {
+        // Simulate progress updates
+        this.records.forEach((record, index) => {
+          if (record.status === 'pending' && Math.random() > 0.7) {
+            record.progress = Math.min(record.progress + Math.floor(Math.random() * 20), 100);
+            if (record.progress >= 100) {
+              record.status = 'completed';
+            }
+          }
+        });
+
+        // Update UI if on records page
+        if (this.currentPage === 'recordsPage') {
+          this.renderRecords();
+        }
+        
+        // Update progress
+        this.updateProgress();
+        
+        console.log('🔄 リアルタイム更新実行');
+      }
+
+      showNotification(message, type = 'info', duration = 3000) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, duration);
+      }
+
+      // Public methods for global access
+      navigateToPage(pageId) {
+        this.currentPage = pageId;
+        
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(page => {
+          page.classList.remove('active');
+        });
+        
+        // Show target page
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+          targetPage.classList.add('active');
+        }
+        
+        // Update navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('data-page') === pageId) {
+            item.classList.add('active');
+          }
+        });
+        
+        // Add haptic feedback
+        if (navigator.vibrate) {
+          navigator.vibrate(10);
+        }
+        
+        // Page-specific initialization
+        this.initializePage(pageId);
+        
+        // カメラページを離れるときのクリーンアップ
+        if (this.currentPage !== 'cameraPage' && this.cameraStream) {
+          stopCamera();
+        }
+      }
+
+      initializePage(pageId) {
+        switch (pageId) {
+          case 'recordsPage':
+            this.renderRecords();
+            break;
+          case 'teamPage':
+            this.renderMembers();
+            break;
+          case 'createPage':
+            this.initializeCreateForm();
+            break;
+        }
+      }
+
+      initializeCreateForm() {
+        setTimeout(() => {
+          this.updateFormPreview();
+          
+          // Load auto-saved data if exists
+          const autoSaved = localStorage.getItem('autoSave_createRecordForm');
+          if (autoSaved) {
+            try {
+              const { data, timestamp } = JSON.parse(autoSaved);
+              const timeDiff = new Date() - new Date(timestamp);
+              
+              if (timeDiff < 24 * 60 * 60 * 1000) { // 24 hours
+                this.loadFormData('createRecordForm', data);
+                this.showNotification('下書きを復元しました', 'success');
+              }
+            } catch (e) {
+              console.warn('Auto-save data could not be loaded');
+            }
+          }
+        }, 100);
+      }
+
+      loadFormData(formId, data) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+        
+        Object.entries(data).forEach(([key, value]) => {
+          const field = form.querySelector(`[name="${key}"]`);
+          if (field) {
+            field.value = value;
+          }
+        });
+        
+        this.updateFormPreview();
+      }
+
+      saveRecord(event) {
+        if (event) {
+          event.preventDefault();
+        }
+        
+        const form = document.getElementById('createRecordForm');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // Create new record
+        const newRecord = {
+          id: 'R' + String(this.records.length + 1).padStart(3, '0'),
+          title: data.title,
+          subtitle: `${data.floor} ${data.block} - ${data.room}`,
+          status: 'pending',
+          priority: 'medium',
+          date: new Date().toLocaleDateString('ja-JP'),
+          author: data.author,
+          type: data.content,
+          photos: 0,
+          progress: 0,
+          floor: data.floor,
+          block: data.block,
+          note: data.note
+        };
+        
+        this.records.push(newRecord);
+        
+        // Clear auto-saved data
+        localStorage.removeItem('autoSave_createRecordForm');
+        
+        // Show success notification
+        this.showNotification('記録を作成しました', 'success');
+        
+        // Navigate back to records
+        setTimeout(() => {
+          this.navigateToPage('recordsPage');
+        }, 1000);
+      }
+    }
+
+    // ==================== Global Functions ====================
+    let app;
+
+    // Initialize application
+    document.addEventListener('DOMContentLoaded', () => {
+      app = new ConstructionPlatform();
+      window.app = app; // Make globally accessible
+    });
+
+    // Navigation function
+    function navigateToPage(pageId) {
+      if (app) {
+        app.navigateToPage(pageId);
+      }
+    }
+
+    // Camera functions
+    async function startCamera() {
+      try {
+        console.log('📷 カメラ起動開始');
+        
+        const video = document.getElementById('cameraVideo');
+        const placeholder = document.getElementById('cameraPlaceholder');
+        const errorDiv = document.getElementById('cameraError');
+        const detectionOverlay = document.getElementById('detectionOverlay');
+        
+        // UI更新
+        placeholder.style.display = 'none';
+        errorDiv.style.display = 'none';
+        
+        // カメラアクセス
+        const constraints = {
+          video: {
+            facingMode: { ideal: 'environment' },
+            width: { ideal: 1920, max: 1920 },
+            height: { ideal: 1080, max: 1080 }
+          },
+          audio: false
+        };
+        
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        
+        video.srcObject = stream;
+        app.cameraStream = stream;
+        
+        video.onloadedmetadata = () => {
+          video.play().then(() => {
+            console.log('✅ カメラ起動成功');
+            
+            // AI検出オーバーレイを表示
+            setTimeout(() => {
+              detectionOverlay.style.display = 'block';
+            }, 1000);
+            
+          }).catch(console.error);
+        };
+        
+      } catch (error) {
+        console.error('❌ カメラエラー:', error);
+        showCameraError(error.message);
+      }
+    }
+    
+    function showCameraError(message) {
+      const placeholder = document.getElementById('cameraPlaceholder');
+      const errorDiv = document.getElementById('cameraError');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      placeholder.style.display = 'none';
+      errorDiv.style.display = 'flex';
+      
+      if (message.includes('NotAllowed')) {
+        errorMessage.textContent = 'カメラの使用権限が拒否されました。ブラウザの設定でカメラを許可してください。';
+      } else if (message.includes('NotFound')) {
+        errorMessage.textContent = 'カメラが見つかりませんでした。デバイスにカメラが接続されているか確認してください。';
+      } else {
+        errorMessage.textContent = message;
+      }
+    }
+    
+    function retryCamera() {
+      document.getElementById('cameraError').style.display = 'none';
+      document.getElementById('cameraPlaceholder').style.display = 'flex';
+      startCamera();
+    }
+    
+    function stopCamera() {
+      if (app.cameraStream) {
+        console.log('📴 カメラ停止');
+        app.cameraStream.getTracks().forEach(track => track.stop());
+        app.cameraStream = null;
+        
+        const video = document.getElementById('cameraVideo');
+        video.srcObject = null;
+        
+        document.getElementById('detectionOverlay').style.display = 'none';
+        document.getElementById('cameraPlaceholder').style.display = 'flex';
+      }
+    }
+    
+    function takePhoto() {
+      const video = document.getElementById('cameraVideo');
+      const canvas = document.getElementById('cameraCanvas');
+      
+      if (!video.srcObject) {
+        app.showNotification('カメラが起動していません', 'error');
+        return;
+      }
+      
+      console.log('📸 写真撮影開始');
+      
+      // Canvas設定
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      
+      // 撮影エフェクト
+      const flash = document.createElement('div');
+      flash.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: white;
+        opacity: 0.9;
+        z-index: 999;
+        pointer-events: none;
+        animation: flash 0.3s ease-out;
+      `;
+      
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 300);
+      
+      // 写真データ取得
+      const photoData = canvas.toDataURL('image/jpeg', 0.9);
+      app.lastPhoto = photoData;
+      
+      console.log('✅ 写真撮影完了');
+      
+      // 結果ページに移動
+      setTimeout(() => {
+        const previewImage = document.getElementById('previewImage');
+        if (previewImage) {
+          previewImage.src = photoData;
+        }
+        navigateToPage('photoResultPage');
+      }, 500);
+    }
+    
+    function retakePhoto() {
+      navigateToPage('cameraPage');
+    }
+    
+    function savePhotoRecord() {
+      // 写真記録を保存
+      const newRecord = {
+        id: `R${String(app.records.length + 1).padStart(3, '0')}`,
+        title: '位置決め具検査',
+        subtitle: '6F B-12 - AI判定完了',
+        status: 'completed',
+        priority: 'medium',
+        date: new Date().toISOString().split('T')[0],
+        author: '現場作業者',
+        type: 'AI判定',
+        photos: 1,
+        progress: 100,
+        floor: '6F',
+        block: 'B-12',
+        photoData: app.lastPhoto
+      };
+      
+      app.records.unshift(newRecord);
+      app.renderRecords();
+      app.showNotification('写真記録を保存しました', 'success');
+      
+      navigateToPage('recordsPage');
+    }
+    
+    function toggleFlashlight() {
+      app.isFlashOn = !app.isFlashOn;
+      const flashBtn = document.getElementById('flashBtn');
+      
+      if (app.isFlashOn) {
+        flashBtn.style.color = '#FFB800';
+        app.showNotification('フラッシュライトON', 'info');
+      } else {
+        flashBtn.style.color = 'white';
+        app.showNotification('フラッシュライトOFF', 'info');
+      }
+      
+      console.log('⚡ フラッシュライト:', app.isFlashOn ? 'ON' : 'OFF');
+    }
+    
+    function showLastPhoto() {
+      if (app.lastPhoto) {
+        // 前回の写真を表示
+        const previewImage = document.getElementById('previewImage');
+        if (previewImage) {
+          previewImage.src = app.lastPhoto;
+        }
+        navigateToPage('photoResultPage');
+      } else {
+        app.showNotification('保存された写真がありません', 'warning');
+      }
+    }
+    
+    function showCameraSettings() {
+      app.showNotification('カメラ設定画面を準備中...', 'info');
+    }
+    
+    function showCameraHelp() {
+      app.showNotification('カメラヘルプを表示中...', 'info');
+    }
+    
+    // Record detail functions
+    function viewRecordDetails(recordId) {
+      console.log('📋 Viewing record details:', recordId);
+      const record = app.records.find(r => r.id === recordId);
+      
+      if (record) {
+        if (record.photoData) {
+          // Show photo with details
+          app.showNotification(`${record.title}の詳細を表示中...`, 'info');
+          
+          // Create detail view (simplified for demo)
+          setTimeout(() => {
+            showRecordDetailModal(record);
+          }, 300);
+        } else {
+          app.showNotification(`${record.title}の詳細情報を準備中...`, 'info');
+        }
+      }
+    }
+    
+    function viewPhotoFullscreen(recordId) {
+      console.log('🖼️ Viewing photo fullscreen:', recordId);
+      const record = app.records.find(r => r.id === recordId);
+      
+      if (record && record.photoData) {
+        // Create fullscreen photo viewer
+        const viewer = document.createElement('div');
+        viewer.style.cssText = `
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          cursor: pointer;
+        `;
+        
+        viewer.innerHTML = `
+          <div style="position: relative; max-width: 90%; max-height: 90%;">
+            <img src="${record.photoData}" style="width: 100%; height: auto; border-radius: 8px;">
+            <div style="position: absolute; top: -40px; left: 0; color: white; font-size: 0.875rem;">
+              📷 ${record.title} - ${record.date}
+            </div>
+            <div style="position: absolute; top: -40px; right: 0; color: white; font-size: 1.5rem; cursor: pointer;">
+              ✕
+            </div>
+          </div>
+        `;
+        
+        viewer.onclick = () => viewer.remove();
+        document.body.appendChild(viewer);
+      }
+    }
+    
+    function editRecord(recordId) {
+      app.showNotification(`記録 ${recordId} の編集画面を準備中...`, 'info');
+    }
+
+    // Settings functions
+    function openSettings() {
+      navigateToPage('settingsPage');
+    }
+
+    function toggleSetting(toggle) {
+      toggle.classList.toggle('active');
+      
+      // Add haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(20);
+      }
+    }
+
+    // Form functions
+    function updatePreview() {
+      if (app) {
+        app.updateFormPreview();
+      }
+    }
+
+    function saveRecord(event) {
+      if (app) {
+        app.saveRecord(event);
+      }
+    }
+
+    // Record functions
+    function editRecord(recordId) {
+      console.log('編集:', recordId);
+      navigateToPage('createPage');
+    }
+
+    function viewRecordDetails(recordId) {
+      console.log('詳細表示:', recordId);
+      app.showNotification('詳細画面を準備中...', 'info');
+    }
+
+    function retryRecord(recordId) {
+      console.log('再検査:', recordId);
+      app.showNotification('再検査を開始します', 'warning');
+    }
+
+    // Analysis functions
+    function exportReport() {
+      app.showNotification('レポートを準備中...', 'info');
+      setTimeout(() => {
+        app.showNotification('レポートをダウンロードしました', 'success');
+      }, 2000);
+    }
+
+    function changeTimeRange(range) {
+      console.log('時間範囲変更:', range);
+      app.showNotification(`${range === 'week' ? '週別' : '月別'}表示に切り替えました`, 'info');
+    }
+
+    // Quality functions
+    function startInspection() {
+      app.showNotification('検査を開始します', 'success');
+    }
+
+    function startSpecificInspection(locationId) {
+      console.log('特定検査開始:', locationId);
+      app.showNotification(`${locationId}の検査を開始します`, 'success');
+    }
+
+    function completeQualityCheck() {
+      app.showNotification('品質チェックが完了しました', 'success');
+    }
+
+    // Team functions
+    function inviteMember() {
+      app.showNotification('メンバー招待画面を準備中...', 'info');
+    }
+
+    function viewMemberDetails(memberId) {
+      console.log('メンバー詳細:', memberId);
+      app.showNotification('メンバー詳細を表示中...', 'info');
+    }
+
+    // Filter functions
+    function filterRecords(filter) {
+      if (app) {
+        app.filterRecords(filter);
+      }
+    }
+
+    // Utility functions
+    function showToast(message, type = 'info') {
+      if (app) {
+        app.showNotification(message, type);
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key) {
+          case '1':
+            e.preventDefault();
+            navigateToPage('homePage');
+            break;
+          case '2':
+            e.preventDefault();
+            navigateToPage('recordsPage');
+            break;
+          case '3':
+            e.preventDefault();
+            navigateToPage('analysisPage');
+            break;
+          case '4':
+            e.preventDefault();
+            navigateToPage('qualityPage');
+            break;
+          case 'n':
+            e.preventDefault();
+            navigateToPage('createPage');
+            break;
+        }
+      }
+    });
+
+    // ==================== Missing Function Implementations ====================
+    
+    // Quality page functions
+    function toggleInspectionDetails() {
+      console.log('🔍 検査詳細を切り替え');
+      const detailsElement = document.querySelector('.inspection-details');
+      if (detailsElement) {
+        detailsElement.style.display = detailsElement.style.display === 'none' ? 'block' : 'none';
+      }
+      showToast('検査詳細を表示しました', 'info');
+    }
+
+    // Team page functions
+    function showPermissionSettings() {
+      console.log('⚙️ 権限設定を表示');
+      const permissionModal = document.createElement('div');
+      permissionModal.className = 'modal-overlay';
+      permissionModal.innerHTML = `
+        <div class="modal-content">
+          <h3>👤 権限設定</h3>
+          <div class="form-group">
+            <label>記録作成権限</label>
+            <select class="form-control">
+              <option>すべてのメンバー</option>
+              <option>監督者のみ</option>
+              <option>管理者のみ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>データ編集権限</label>
+            <select class="form-control">
+              <option>作成者のみ</option>
+              <option>監督者以上</option>
+              <option>管理者のみ</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="this.closest('.modal-overlay').remove()">保存</button>
+            <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">キャンセル</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(permissionModal);
+    }
+
+    function showAllMembers() {
+      console.log('👥 全メンバーを表示');
+      navigateToPage('teamPage');
+      setTimeout(() => {
+        const membersList = document.querySelector('.team-members');
+        if (membersList) {
+          membersList.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+      showToast('全メンバーリストを表示しました', 'info');
+    }
+
+    function scheduleTeamMeeting() {
+      console.log('📅 チーム会議をスケジュール');
+      const meetingModal = document.createElement('div');
+      meetingModal.className = 'modal-overlay';
+      meetingModal.innerHTML = `
+        <div class="modal-content">
+          <h3>📅 チーム会議の予定</h3>
+          <div class="form-group">
+            <label>会議タイトル</label>
+            <input type="text" class="form-control" placeholder="例: 週次進捗確認" />
+          </div>
+          <div class="form-group">
+            <label>日時</label>
+            <input type="datetime-local" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>参加者</label>
+            <select multiple class="form-control">
+              <option>田中 太郎 (現場監督)</option>
+              <option>佐藤 花子 (品質管理)</option>
+              <option>山田 次郎 (施工管理)</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="saveMeeting(); this.closest('.modal-overlay').remove()">スケジュール作成</button>
+            <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">キャンセル</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(meetingModal);
+    }
+
+    function assignTasks() {
+      console.log('📝 タスクを割り当て');
+      const taskModal = document.createElement('div');
+      taskModal.className = 'modal-overlay';
+      taskModal.innerHTML = `
+        <div class="modal-content">
+          <h3>📝 タスク割り当て</h3>
+          <div class="form-group">
+            <label>タスク名</label>
+            <input type="text" class="form-control" placeholder="例: 5F品質検査" />
+          </div>
+          <div class="form-group">
+            <label>担当者</label>
+            <select class="form-control">
+              <option>田中 太郎</option>
+              <option>佐藤 花子</option>
+              <option>山田 次郎</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>期限</label>
+            <input type="date" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>優先度</label>
+            <select class="form-control">
+              <option>高</option>
+              <option>中</option>
+              <option>低</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="saveTask(); this.closest('.modal-overlay').remove()">タスク作成</button>
+            <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">キャンセル</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(taskModal);
+    }
+
+    function generateTeamReport() {
+      console.log('📊 チームレポートを生成');
+      showToast('チームレポートを生成中...', 'info');
+      
+      setTimeout(() => {
+        const reportModal = document.createElement('div');
+        reportModal.className = 'modal-overlay';
+        reportModal.innerHTML = `
+          <div class="modal-content">
+            <h3>📊 チーム実績レポート</h3>
+            <div class="report-summary">
+              <div class="report-stat">
+                <div class="stat-number">156</div>
+                <div class="stat-label">完了した検査</div>
+              </div>
+              <div class="report-stat">
+                <div class="stat-number">94%</div>
+                <div class="stat-label">品質合格率</div>
+              </div>
+              <div class="report-stat">
+                <div class="stat-number">12</div>
+                <div class="stat-label">チームメンバー</div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-primary" onclick="downloadReport()">PDFダウンロード</button>
+              <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">閉じる</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(reportModal);
+        showToast('レポートが生成されました！', 'success');
+      }, 2000);
+    }
+
+    function manageNotifications() {
+      console.log('🔔 通知を管理');
+      const notificationModal = document.createElement('div');
+      notificationModal.className = 'modal-overlay';
+      notificationModal.innerHTML = `
+        <div class="modal-content">
+          <h3>🔔 通知設定</h3>
+          <div class="notification-settings">
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" checked /> 新しい検査記録
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" checked /> 品質アラート
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" /> チーム会議リマインド
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" checked /> タスク期限
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="saveNotificationSettings(); this.closest('.modal-overlay').remove()">設定保存</button>
+            <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">キャンセル</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(notificationModal);
+    }
+
+    // Helper functions for modals
+    function saveMeeting() {
+      showToast('会議がスケジュールされました！', 'success');
+    }
+
+    function saveTask() {
+      showToast('タスクが割り当てられました！', 'success');
+    }
+
+    function downloadReport() {
+      showToast('PDFレポートをダウンロード中...', 'info');
+      setTimeout(() => {
+        showToast('レポートダウンロード完了！', 'success');
+      }, 1500);
+    }
+
+    function saveNotificationSettings() {
+      showToast('通知設定を保存しました！', 'success');
+    }
+
+    // Record detail modal function
+    function showRecordDetailModal(record) {
+      const modal = document.createElement('div');
+      modal.className = 'modal-overlay';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <h3>📋 ${record.title || record.koshu}</h3>
+          <div class="record-details">
+            <div class="detail-section">
+              <div class="detail-row">
+                <span class="detail-label">📍 場所:</span>
+                <span class="detail-value">${record.floor || record.location} ${record.block || ''}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">👤 担当者:</span>
+                <span class="detail-value">${record.author}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">📅 作成日:</span>
+                <span class="detail-value">${record.date}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">📊 ステータス:</span>
+                <span class="detail-value status-${record.status}">${record.status}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">📷 写真:</span>
+                <span class="detail-value">${record.photos}枚</span>
+              </div>
+              ${record.aiResult ? `
+                <div class="detail-row">
+                  <span class="detail-label">🤖 AI判定:</span>
+                  <span class="detail-value">精度 ${record.aiResult.accuracy}%</span>
+                </div>
+              ` : ''}
+              ${record.note ? `
+                <div class="detail-row">
+                  <span class="detail-label">💬 備考:</span>
+                  <span class="detail-value">${record.note}</span>
+                </div>
+              ` : ''}
+            </div>
+            ${record.photoData ? `
+              <div class="photo-section">
+                <h4>📷 撮影画像</h4>
+                <div class="photo-preview">
+                  <img src="${record.photoData}" alt="撮影画像" style="width: 100%; border-radius: var(--radius-lg);">
+                </div>
+              </div>
+            ` : ''}
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="editRecord('${record.id}'); this.closest('.modal-overlay').remove()">編集</button>
+            <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">閉じる</button>
+          </div>
+        </div>
+      `;
+      
+      // Add record detail styles
+      if (!document.querySelector('#record-detail-styles')) {
+        const styles = document.createElement('style');
+        styles.id = 'record-detail-styles';
+        styles.innerHTML = `
+          .record-details {
+            margin: var(--space-4) 0;
+          }
+          .detail-section {
+            margin-bottom: var(--space-4);
+          }
+          .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: var(--space-2) 0;
+            border-bottom: 1px solid var(--border-primary);
+          }
+          .detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 80px;
+            flex-shrink: 0;
+          }
+          .detail-value {
+            color: var(--text-primary);
+            text-align: right;
+            flex-grow: 1;
+          }
+          .status-completed { color: var(--success); }
+          .status-pending { color: var(--warning); }
+          .status-failed { color: var(--danger); }
+          .photo-section {
+            margin-top: var(--space-4);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--border-primary);
+          }
+          .photo-section h4 {
+            color: var(--text-accent);
+            margin-bottom: var(--space-3);
+            font-size: 1rem;
+          }
+          .photo-preview {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+          }
+        `;
+        document.head.appendChild(styles);
+      }
+      
+      document.body.appendChild(modal);
+    }
+
+    // Edit record function
+    function editRecord(recordId) {
+      navigateToPage('createPage');
+      showToast('記録編集画面に移動します', 'info');
+    }
+
+    // Enhanced data update functions
+    function updateAllStatistics() {
+      updateDashboardStats();
+      updateRecordsBadge();
+      updateQualityMetrics();
+      updateAnalyticsData();
+    }
+
+    function updateDashboardStats() {
+      if (!app.records) return;
+      
+      const completed = app.records.filter(r => r.status === 'completed').length;
+      const pending = app.records.filter(r => r.status === 'pending').length;
+      const failed = app.records.filter(r => r.status === 'failed').length;
+      const total = app.records.length;
+      
+      // Update home page statistics
+      const completedElement = document.querySelector('[data-stat="completed"]');
+      const pendingElement = document.querySelector('[data-stat="pending"]');
+      const failedElement = document.querySelector('[data-stat="failed"]');
+      const totalElement = document.querySelector('[data-stat="total"]');
+      
+      if (completedElement) completedElement.textContent = completed;
+      if (pendingElement) pendingElement.textContent = pending;
+      if (failedElement) failedElement.textContent = failed;
+      if (totalElement) totalElement.textContent = total;
+      
+      // Update completion rate
+      const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+      const rateElements = document.querySelectorAll('[data-stat="completion-rate"]');
+      rateElements.forEach(el => el.textContent = `${completionRate}%`);
+      
+      console.log(`📊 統計更新: 完了${completed}/全${total} (${completionRate}%)`);
+    }
+
+    function updateRecordsBadge() {
+      const pendingCount = app.records ? app.records.filter(r => r.status === 'pending').length : 0;
+      const badge = document.getElementById('recordsBadge');
+      if (badge) {
+        badge.textContent = pendingCount;
+        badge.style.display = pendingCount > 0 ? 'block' : 'none';
+      }
+    }
+
+    function updateQualityMetrics() {
+      if (!app.records) return;
+      
+      const recentRecords = app.records.slice(-10); // 最新10件
+      const qualityScore = recentRecords.length > 0 ? 
+        Math.round(recentRecords.filter(r => r.status === 'completed').length / recentRecords.length * 100) : 0;
+      
+      const qualityElements = document.querySelectorAll('[data-metric="quality-score"]');
+      qualityElements.forEach(el => el.textContent = `${qualityScore}%`);
+    }
+
+    function updateAnalyticsData() {
+      // Update analytics charts and metrics
+      const analyticsPage = document.getElementById('analysisPage');
+      if (analyticsPage && analyticsPage.classList.contains('active')) {
+        // Trigger analytics refresh if page is active
+        setTimeout(() => {
+          showToast('分析データを更新しました', 'info');
+        }, 500);
+      }
+    }
+
+    // Real-time data sync
+    function startDataSync() {
+      // Update statistics every 30 seconds
+      setInterval(updateAllStatistics, 30000);
+      
+      // Update time displays every minute
+      setInterval(updateTimeDisplays, 60000);
+    }
+
+    function updateTimeDisplays() {
+      const now = new Date();
+      const timeElements = document.querySelectorAll('[data-time="current"]');
+      timeElements.forEach(el => {
+        el.textContent = now.toLocaleTimeString('ja-JP', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      });
+      
+      const dateElements = document.querySelectorAll('[data-date="current"]');
+      dateElements.forEach(el => {
+        el.textContent = now.toLocaleDateString('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
+      });
+    }
+
+    // Enhanced record management
+    function addNewRecord(recordData) {
+      if (!app.records) app.records = [];
+      
+      const newRecord = {
+        id: `R${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        ...recordData
+      };
+      
+      app.records.unshift(newRecord);
+      updateAllStatistics();
+      showToast('新しい記録が追加されました', 'success');
+      
+      // Auto-save to localStorage
+      try {
+        localStorage.setItem('constructionRecords', JSON.stringify(app.records));
+      } catch (e) {
+        console.warn('レコード保存に失敗:', e);
+      }
+      
+      return newRecord.id;
+    }
+
+    function deleteRecord(recordId) {
+      if (!app.records) return false;
+      
+      const index = app.records.findIndex(r => r.id === recordId);
+      if (index !== -1) {
+        app.records.splice(index, 1);
+        updateAllStatistics();
+        showToast('記録を削除しました', 'info');
+        
+        // Update localStorage
+        try {
+          localStorage.setItem('constructionRecords', JSON.stringify(app.records));
+        } catch (e) {
+          console.warn('レコード保存に失敗:', e);
+        }
+        
+        return true;
+      }
+      return false;
+    }
+
+    function updateRecordStatus(recordId, newStatus) {
+      if (!app.records) return false;
+      
+      const record = app.records.find(r => r.id === recordId);
+      if (record) {
+        record.status = newStatus;
+        record.lastModified = new Date().toISOString();
+        updateAllStatistics();
+        showToast(`記録のステータスを${newStatus}に更新しました`, 'success');
+        
+        // Update localStorage
+        try {
+          localStorage.setItem('constructionRecords', JSON.stringify(app.records));
+        } catch (e) {
+          console.warn('レコード保存に失敗:', e);
+        }
+        
+        return true;
+      }
+      return false;
+    }
+
+    // Enhanced toast notification system
+    function showToast(message, type = 'info', duration = 3000) {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      
+      const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+      };
+      
+      toast.innerHTML = `
+        <div class="toast-content">
+          <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+          <span class="toast-message">${message}</span>
+        </div>
+      `;
+      
+      // Add toast styles if not already added
+      if (!document.querySelector('#toast-styles')) {
+        const styles = document.createElement('style');
+        styles.id = 'toast-styles';
+        styles.innerHTML = `
+          .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            animation: slideIn 0.3s ease, slideOut 0.3s ease ${duration - 300}ms forwards;
+            max-width: 300px;
+            box-shadow: var(--shadow-lg);
+          }
+          .toast-success { background: linear-gradient(135deg, var(--success), #059669); }
+          .toast-error { background: linear-gradient(135deg, var(--danger), #dc2626); }
+          .toast-warning { background: linear-gradient(135deg, var(--warning), #d97706); }
+          .toast-info { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
+          .toast-content { display: flex; align-items: center; gap: 8px; }
+          @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+          @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+          
+          .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+          }
+          .modal-content {
+            background: var(--surface-elevated);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-6);
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-secondary);
+          }
+          .modal-content h3 {
+            color: var(--text-accent);
+            margin-bottom: var(--space-4);
+            font-size: 1.25rem;
+          }
+          .form-group {
+            margin-bottom: var(--space-4);
+          }
+          .form-group label {
+            display: block;
+            margin-bottom: var(--space-2);
+            color: var(--text-secondary);
+            font-weight: 500;
+          }
+          .form-control {
+            width: 100%;
+            padding: var(--space-3);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 1rem;
+          }
+          .form-actions {
+            display: flex;
+            gap: var(--space-3);
+            margin-top: var(--space-6);
+          }
+          .report-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+            margin: var(--space-4) 0;
+          }
+          .report-stat {
+            text-align: center;
+            padding: var(--space-4);
+            background: var(--surface-glass);
+            border-radius: var(--radius-lg);
+          }
+          .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-accent);
+          }
+          .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-1);
+          }
+          .notification-settings {
+            margin: var(--space-4) 0;
+          }
+          .setting-item {
+            margin-bottom: var(--space-3);
+          }
+          .setting-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            cursor: pointer;
+            padding: var(--space-2);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+          }
+          .setting-label:hover {
+            background: var(--surface-glass);
+          }
+          @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        `;
+        document.head.appendChild(styles);
+      }
+      
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), duration);
+    }
+
+    // Performance monitoring
+    if ('performance' in window) {
+      window.addEventListener('load', () => {
+        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        console.log(`⚡ ページロード時間: ${loadTime}ms`);
+      });
+    }
+
+    // PWA install prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      console.log('📱 PWAインストール可能');
+    });
+
+    // Service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('🔄 Service Worker登録完了'))
+        .catch(() => console.log('⚠️ Service Worker登録失敗'));
+    }
+
+    // Initialize enhanced features
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🏗️ 施工評価プラットフォーム完全版 - 初期化開始');
+      
+      // Start data synchronization
+      startDataSync();
+      
+      // Initialize time displays
+      updateTimeDisplays();
+      
+      // Initialize statistics
+      updateAllStatistics();
+      
+      // Show welcome message
+      setTimeout(() => {
+        showToast('施工評価プラットフォームへようこそ！', 'info');
+      }, 1000);
+      
+      console.log('✅ アプリケーション初期化完了');
+    });
+  </script>
+</body>
+</html>
