@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>施工評価アプリ - スマホ対応版</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #0A0A0F;
+      color: white;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      color: #B4B4B8;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    
+    .app-link {
+      display: block;
+      background: linear-gradient(135deg, #00F5FF 0%, #8B5CF6 50%, #F59E0B 100%);
+      color: white;
+      text-decoration: none;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-weight: bold;
+      margin: 20px 0;
+      box-shadow: 0 8px 25px rgba(0, 245, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .app-link:hover, .app-link:active {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 245, 255, 0.4);
+    }
+    
+    .features {
+      text-align: left;
+      margin-top: 40px;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      margin: 12px 0;
+      color: #B4B4B8;
+    }
+    
+    .feature-icon {
+      margin-right: 12px;
+      font-size: 1.2rem;
+    }
+    
+    .steps {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      text-align: left;
+    }
+    
+    .steps h3 {
+      color: #00F5FF;
+      margin-bottom: 15px;
+    }
+    
+    .step {
+      margin: 10px 0;
+      color: #B4B4B8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">🏗️</div>
+    <h1>施工評価プラットフォーム</h1>
+    <p>スマホ・タブレット対応の施工管理アプリ</p>
+    
+    <a href="simple-construction-app.html" class="app-link">
+      📱 シンプル版アプリを起動
+    </a>
+    
+    <a href="complete-construction-platform.html" class="app-link" style="background: linear-gradient(135deg, #6B7280 0%, #374151 100%); margin-top: 12px;">
+      🏗️ フル機能版アプリ
+    </a>
+    
+    <div class="steps">
+      <h3>📱 スマホでの使い方</h3>
+      <div class="step">1. 上のボタンをタップしてアプリを開く</div>
+      <div class="step">2. ホーム画面で「📷 カメラ撮影」をタップ</div>
+      <div class="step">3. 「カメラを起動」をタップして権限を許可</div>
+      <div class="step">4. 白い⚪ボタンで写真撮影</div>
+      <div class="step">5. AI判定結果を確認して保存</div>
+    </div>
+    
+    <div class="features">
+      <h3>✨ 主な機能</h3>
+      <div class="feature">
+        <span class="feature-icon">📷</span>
+        <span>カメラ撮影・AI判定システム</span>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📋</span>
+        <span>施工記録管理</span>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">✅</span>
+        <span>品質管理・検査判定</span>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">👥</span>
+        <span>チーム管理・権限システム</span>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📊</span>
+        <span>分析ダッシュボード</span>
+      </div>
+    </div>
+    
+    <p style="margin-top: 40px; font-size: 0.9rem; color: #6B7280;">
+      ⚠️ カメラ機能はHTTPS環境でのみ動作します<br>
+      GitHubやNetlifyなどのホスティングサービスをご利用ください
+    </p>
+  </div>
+</body>
+</html>
